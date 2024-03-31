@@ -1,0 +1,103 @@
+<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
+  <h3 class="text-xl md:text-2xl">Categorias</h3>
+
+  <div class="space-x-3">
+    <app-filter
+      (onFilterData)="handleFilterData($event)"
+      (onDeleteFilter)="deleteFilter()"
+    />
+    <button (click)="openForm()" class="btn-sm md:btn-md btn btn-primary px-10">
+      Crear
+    </button>
+  </div>
+</div>
+
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead class="sticky top-0">
+      <tr>
+        <th></th>
+        <th class="sticky left-0 bg-base-100">Nombre</th>
+        <th>Precio de Venta</th>
+        <th>Categoria</th>
+        <th>Marca</th>
+        <th>Stock</th>
+        <th>Unidad Medida</th>
+        <th>Codigo</th>
+        <th>Image</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for (product of productState().products; track $index) {
+        <tr>
+          <th>{{ $index + 1 }}</th>
+          <td
+            [ngClass]="{
+              'bg-base-100': $index % 2 == 0,
+              'bg-base-200': $index % 2 == 1
+            }"
+            class="sticky left-0"
+          >
+            {{ product.name }}
+          </td>
+          <td>s/ {{ product.salePrice }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.unitMeasurement }}</td>
+          <td>{{ product.barCode }}</td>
+          <td>
+            <div class="avatar">
+              <div class="w-20 rounded">
+                <img [src]="product.image" alt="imagen producto" />
+              </div>
+            </div>
+          </td>
+          <!-- Acciones -->
+          <td class="flex items-center gap-2">
+            <button
+              (click)="openForm(product)"
+              class="btn btn-ghost text-success rounded-full tooltip"
+              data-tip="Actulizar"
+            >
+              <i class="bx bxs-edit-alt"></i>
+            </button>
+            <button
+              (click)="remove(product)"
+              class="btn btn-ghost text-error rounded-full tooltip"
+              data-tip="Eliminar"
+            >
+              <i class="bx bxs-trash"></i>
+            </button>
+
+            <button
+              (click)="detalle(product)"
+              class="btn btn-ghost text-info rounded-full tooltip"
+              data-tip="Detalle"
+            >
+              <i class="bx bxs-detail"></i>
+            </button>
+          </td>
+          <!-- Acciones -->
+        </tr>
+      } @empty {
+        <p>No hay categorias...</p>
+      }
+    </tbody>
+  </table>
+</div>
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+
+<app-pagination
+  [totalRegistros]="this.productState().totalRegistros"
+  [(pagination)]="pagination"
+  (onChangePage)="changePage()"
+/>

@@ -1,0 +1,40 @@
+<div class="w-full flex items-center justify-center">
+  <div
+    class="fixed z-50 top-10 flex bg-base-content shadow-2xl rounded-lg caja w-[400px]"
+  >
+    <button
+      class="absolute top-2 right-5 btn btn-ghost text-primary"
+      (click)="closeAlert()"
+    >
+      <i class="bx bx-window-close text-xl"></i>
+    </button>
+    <div
+      [class]="alerts.color"
+      class="icon flex justify-center items-center p-6 rounded-tr-3xl rounded-lg"
+    >
+      <div
+        [class]="alerts.text"
+        class="h-8 w-8 bg-base-100 rounded-full flex items-center justify-center"
+      >
+        <i [class]="alerts.icon" class="text-base-content"></i>
+      </div>
+    </div>
+    <div
+      class="flex items-center justify-between w-full gap-3 p-4 rounded-tr-lg rounded-br-lg"
+    >
+      <div class="flex flex-col">
+        <h2 [class]="alerts.text" class="font-bold">{{ alerts.type }}</h2>
+        <p class="text-base-100 font-bold">
+          {{ message }}
+        </p>
+      </div>
+      <!-- <div class="countdown text-white">
+        <div class="number">5</div>
+        <div class="number">4</div>
+        <div class="number">3</div>
+        <div class="number">2</div>
+        <div class="number">1</div>
+      </div> -->
+    </div>
+  </div>
+</div>

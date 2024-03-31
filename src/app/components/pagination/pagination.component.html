@@ -1,0 +1,23 @@
+<div class="flex flex-col items-center mt-5">
+  <div class="join">
+    @for (item of totalPageArray(); track $index) {
+      <button
+        [class.btn-active]="$index + 1 === pagination().page"
+        (click)="selectPage($index + 1)"
+        class="join-item btn"
+      >
+        {{ $index + 1 }}
+      </button>
+    }
+  </div>
+  <p class="font-semibold mb-3">Total Registros : {{ totalRegistros() }}</p>
+  <select
+    [formControl]="selectQuantityRegister"
+    class="select select-bordered select-sm w-full max-w-[200px]"
+  >
+    <option disabled selected>Registros por tabla</option>
+    <option value="15">15 Registros por pagina</option>
+    <option value="30">30 Registros por pagina</option>
+    <option value="45">45 Registros por pagina</option>
+  </select>
+</div>

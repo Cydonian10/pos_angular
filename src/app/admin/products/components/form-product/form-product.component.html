@@ -1,0 +1,237 @@
+<div class="bg-base-300 h-screen absolute right-0 w-96 md:w-[700px]">
+  <button
+    (click)="dialogRef.close(false)"
+    class="absolute top-2 right-5 btn btn-ghost text-primary z-50"
+  >
+    <i class="bx bx-window-close text-xl"></i>
+  </button>
+  <div class="bg-base-200 p-5 sticky top-0">
+    <h3 class="text-xl">
+      {{ data?.product ? "Actualizar Producto" : "Crear Producto" }}
+    </h3>
+  </div>
+
+  <!-- Formulario -->
+  <div class="p-5 h-[calc(100vh_-_156px)] bg-base-100 overflow-y-auto">
+    <form [formGroup]="form">
+      <!-- Input Nombre -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Nombre</span>
+        </div>
+        <input
+          formControlName="name"
+          type="text"
+          placeholder="Type here"
+          class="input input-bordered w-full"
+        />
+        @if (name.invalid && name.touched) {
+          @for (error of name.errors | keyvalue; track $index) {
+            <span class="label-text text-error font-bold">{{
+              error | formerror: { minl: 3 }
+            }}</span>
+          }
+        }
+      </label>
+
+      <!-- Input Dscription -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Descripcion</span>
+        </div>
+        <textarea
+          formControlName="description"
+          type="text"
+          placeholder="Type here"
+          class="textarea textarea-bordered w-full"
+        ></textarea>
+        @if (description.invalid && description.touched) {
+          @for (error of description.errors | keyvalue; track $index) {
+            <span class="label-text text-error font-bold">{{
+              error | formerror: { minl: 3 }
+            }}</span>
+          }
+        }
+      </label>
+
+      <!-- precio de compra y stock -->
+      <div class="md:flex md:items-start gap-3">
+        <!-- Input Stock -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Stock</span>
+          </div>
+          <input
+            formControlName="stock"
+            type="number"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+          @if (stock.invalid && stock.touched) {
+            @for (error of stock.errors | keyvalue; track $index) {
+              <span class="label-text text-error font-bold">{{
+                error | formerror: { minl: 3 }
+              }}</span>
+            }
+          }
+        </label>
+        <!-- Input PurchasePrice -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Precio de Compra</span>
+          </div>
+          <input
+            formControlName="purchasePrice"
+            type="number"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+          @if (purchasePrice.invalid && purchasePrice.touched) {
+            @for (error of purchasePrice.errors | keyvalue; track $index) {
+              <span class="label-text text-error font-bold">{{
+                error | formerror: { minl: 3 }
+              }}</span>
+            }
+          }
+        </label>
+      </div>
+
+      <!-- bar code y precio de venta -->
+      <div class="md:flex md:items-start gap-3">
+        <!-- Input Sale Price -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Precio de Venta</span>
+          </div>
+          <input
+            formControlName="salePrice"
+            type="number"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+          @if (salePrice.invalid && salePrice.touched) {
+            @for (error of salePrice.errors | keyvalue; track $index) {
+              <span class="label-text text-error font-bold">{{
+                error | formerror: { minl: 3 }
+              }}</span>
+            }
+          }
+        </label>
+
+        <!-- Input Bar Code -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Codigo de Barras</span>
+          </div>
+          <input
+            formControlName="barCode"
+            type="number"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+          @if (barCode.invalid && barCode.touched) {
+            @for (error of barCode.errors | keyvalue; track $index) {
+              <span class="label-text text-error font-bold">{{
+                error | formerror: { minl: 3 }
+              }}</span>
+            }
+          }
+        </label>
+      </div>
+
+      <!-- Input Size -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Tamaño</span>
+        </div>
+        <input
+          formControlName="size"
+          type="text"
+          placeholder="Type here"
+          class="input input-bordered w-full"
+        />
+        @if (size.invalid && size.touched) {
+          @for (error of size.errors | keyvalue; track $index) {
+            <span class="label-text text-error font-bold">{{
+              error | formerror: { minl: 3 }
+            }}</span>
+          }
+        }
+      </label>
+
+      <!-- Input Categorias -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Categorias</span>
+        </div>
+        <select formControlName="categoryId" class="select select-bordered">
+          <option disabled selected>Selecione una categoria</option>
+          @for (category of data?.categories; track $index) {
+            <option [value]="category.id">{{ category.name }}</option>
+          }
+        </select>
+      </label>
+
+      <!-- Input Marcas -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Marcas</span>
+        </div>
+        <select formControlName="brandId" class="select select-bordered">
+          <option disabled selected>Selecione una Marca</option>
+          @for (brand of data?.brands; track $index) {
+            <option [value]="brand.id">{{ brand.name }}</option>
+          }
+        </select>
+      </label>
+
+      <!-- Input Unidad de Mediada -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Unidad de medida</span>
+        </div>
+        <select
+          formControlName="unitMeasurementId"
+          class="select select-bordered"
+        >
+          <option disabled selected>Selecione una unidad de medida</option>
+          @for (unit of data?.units; track $index) {
+            <option [value]="unit.id">{{ unit.name }}</option>
+          }
+        </select>
+      </label>
+
+      <!-- Input File -->
+      <div class="space-y-3">
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Imagen</span>
+          </div>
+          <input
+            (change)="onFileSelected($event)"
+            type="file"
+            class="file-input file-input-bordered w-full"
+          />
+        </label>
+        <!-- Input File -->
+        <!-- Image -->
+        @if (imageUrl()) {
+          <div class="avatar">
+            <div class="w-80 rounded">
+              <img [src]="imageUrl()" alt="no hay imagen" />
+            </div>
+          </div>
+        }
+      </div>
+      <!-- Input File -->
+    </form>
+  </div>
+  <div footer class="flex justify-end gap-4 p-5 bg-base-200 sticky bottom-0">
+    <button (click)="dialogRef.close(false)" class="btn btn-outline btn-error">
+      Cancelar
+    </button>
+    <button (click)="handleForm()" class="btn btn-primary">
+      Guardar Cambios
+    </button>
+  </div>
+</div>

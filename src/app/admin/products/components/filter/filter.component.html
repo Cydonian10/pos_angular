@@ -1,0 +1,69 @@
+<button
+  (click)="isOpen = !isOpen"
+  type="button"
+  cdkOverlayOrigin
+  class="btn-sm md:btn-md btn btn-outline btn-primary px-10 md:px-10"
+  #trigger="cdkOverlayOrigin"
+>
+  {{ isOpen ? "Cerrar Filtro" : "Abrir Filtro" }}
+</button>
+
+<!-- This template displays the overlay content and is connected to the button -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOffsetY]="10"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+  <ul class="menu p-5 shadow bg-base-300 rounded-box w-80">
+    <form [formGroup]="form">
+      <div class="space-y-3">
+        <label class="input input-bordered flex items-center gap-2 input-sm">
+          <input
+            type="text"
+            formControlName="name"
+            class="grow"
+            placeholder="Buscar por nombre"
+          />
+          <i class="bx bxs-search"></i>
+        </label>
+        <label class="input input-bordered flex items-center gap-2 input-sm">
+          <input
+            type="number"
+            formControlName="stock"
+            class="grow"
+            placeholder="Buscar mayor al stock"
+          />
+          <i class="bx bxs-search"></i>
+        </label>
+        <label class="input input-bordered flex items-center gap-2 input-sm">
+          <input
+            type="number"
+            formControlName="price"
+            class="grow"
+            placeholder="Buscar mayor al precio"
+          />
+          <i class="bx bxs-search"></i>
+        </label>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button
+          type="button"
+          (click)="handleFilterData()"
+          class="btn btn-ghost text-primary btn-sm"
+        >
+          <span>Aplicar</span>
+          <i class="bx bx-search-alt-2"></i>
+        </button>
+        <button
+          (click)="handleDeleteFilter()"
+          type="button"
+          class="btn btn-ghost text-error btn-sm"
+        >
+          <span>Quitar</span>
+          <i class="bx bxs-trash-alt"></i>
+        </button>
+      </div>
+    </form>
+  </ul>
+</ng-template>

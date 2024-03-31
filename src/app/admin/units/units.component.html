@@ -1,0 +1,70 @@
+<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
+  <h3 class="text-xl md:text-2xl">Unidades de Medida</h3>
+  <label class="input input-bordered flex items-center gap-2">
+    <input
+      [formControl]="filter"
+      type="text"
+      class="grow"
+      placeholder="Search"
+    />
+    <i class="bx bx-search-alt-2"></i>
+  </label>
+  <button (click)="openForm()" class="btn btn-primary">Crear</button>
+</div>
+
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead class="sticky top-0">
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Symbol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for (unit of unitState().units; track $index) {
+        <tr>
+          <th>{{ $index + 1 }}</th>
+          <td
+            [ngClass]="{
+              'bg-base-100': $index % 2 == 0,
+              'bg-base-200': $index % 2 == 1
+            }"
+            class="sticky left-0"
+          >
+            {{ unit.name }}
+          </td>
+          <td>{{ unit.symbol }}</td>
+          <!-- Acciones -->
+          <td class="flex items-center gap-2">
+            <button
+              (click)="openForm(unit)"
+              class="btn btn-ghost text-success rounded-full tooltip"
+              data-tip="Actulizar"
+            >
+              <i class="bx bxs-edit-alt"></i>
+            </button>
+            <button
+              (click)="remove(unit)"
+              class="btn btn-ghost text-error rounded-full tooltip"
+              data-tip="Eliminar"
+            >
+              <i class="bx bxs-trash"></i>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <p>No hay unidades...</p>
+      }
+    </tbody>
+  </table>
+</div>
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->

@@ -1,0 +1,123 @@
+<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
+  <h3 class="text-xl md:text-2xl">Detalla del Producto</h3>
+
+  <button (click)="backPage()" class="btn btn-primary">Atras</button>
+</div>
+
+<section>
+  <div class="md:flex gap-4">
+    <div class="md:w-5/12 flex justify-center">
+      <div class="grid grid-cols-2 w-[400px] border-2">
+        <span class="text-xl font-bold border-b-2 border-r-2 p-3">Campo</span>
+        <span class="text-xl font-bold border-b-2 p-3">Value</span>
+
+        <span class="font-semibold p-2">Nombre</span>
+        <span class="font-semibold p-2">{{
+          state().currentProduct?.name
+        }}</span>
+
+        <span class="font-semibold p-2">Descripción: </span>
+        <span class="font-semibold p-2">{{
+          state().currentProduct?.description
+        }}</span>
+
+        <span class="font-semibold p-2">Stock: </span>
+        <span class="font-semibold p-2">{{
+          state().currentProduct?.stock
+        }}</span>
+
+        <span class="font-semibold p-2">Precio de venta: </span>
+        <span class="font-semibold p-2">{{
+          state().currentProduct?.salePrice
+        }}</span>
+
+        <span class="font-semibold p-2">Precio de Compra: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.purchasePrice
+        }}</span>
+
+        <span class="font-semibold p-2">Categoria: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.category
+        }}</span>
+
+        <span class="font-semibold p-2">Marca: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.brand
+        }}</span>
+
+        <span class="font-semibold p-2">Unidad: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.unitMeasurement
+        }}</span>
+
+        <span class="font-semibold p-2">Codigo: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.barCode
+        }}</span>
+
+        <span class="font-semibold p-2">Cantidad Vendida: </span
+        ><span class="font-semibold p-2">{{
+          state().currentProduct?.quantitySale
+        }}</span>
+      </div>
+    </div>
+    <div class="md:w-7/12 flex justify-center">
+      <div class="avatar">
+        <div class="w-96 self-center rounded">
+          <img [src]="state().currentProduct?.image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mt-5">
+  <div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
+    <h3 class="text-xl md:text-2xl">Descuentos</h3>
+
+    <button class="btn btn-primary" (click)="openFormAddDiscount()">
+      Nuevo Descuento
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="table table-zebra">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nombre</th>
+          <th>Precio a descontar</th>
+          <th>Minima cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        @for (discount of state().discounts; track $index) {
+          <tr>
+            <th>{{ $index + 1 }}</th>
+            <td>{{ discount.name }}</td>
+            <td>s/ {{ discount.discountedPrice }}</td>
+            <td>
+              {{ discount.minimumDiscountQuantity }} -
+              {{ state().currentProduct?.unitMeasurement }}s
+            </td>
+            <td>
+              <button
+                (click)="remove(discount)"
+                class="btn btn-ghost text-error rounded-full tooltip"
+                data-tip="Eliminar"
+              >
+                <i class="bx bxs-trash"></i>
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <p class="text-error font-semibold">No hay decuentos</p>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
