@@ -21,7 +21,7 @@
           formControlName="name"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered input-primary w-full"
         />
         @if (name.invalid && name.touched) {
           @for (error of name.errors | keyvalue; track $index) {
@@ -40,7 +40,7 @@
           formControlName="symbol"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered input-primary w-full"
         />
         @if (symbol.invalid && symbol.touched) {
           @for (error of symbol.errors | keyvalue; track $index) {

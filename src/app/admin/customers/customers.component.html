@@ -1,4 +1,4 @@
-<admin-title title="Marcas" (onClick)="openForm()"></admin-title>
+<admin-title title="Clientes" (onClick)="openForm()"> </admin-title>
 
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->
@@ -10,14 +10,15 @@
       <tr>
         <th></th>
         <th class="sticky left-0 bg-base-100">Nombre</th>
-        <th>Descripcion</th>
-        <th>Imagen</th>
-        <th>Acciones</th>
+        <th>DNI</th>
+        <th>Telefono</th>
+        <th>Direccion</th>
+        <th>Puntos</th>
       </tr>
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (brand of brandState().brands; track $index) {
+      @for (customer of customerState().customers; track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -27,23 +28,23 @@
             }"
             class="sticky left-0"
           >
-            {{ brand.name }}
+            {{ customer.name }}
           </td>
-          <td>{{ brand.description }}</td>
-          <td>
-            <img [src]="brand.image" width="50" alt="image" />
-          </td>
+          <td>{{ customer.dni }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.points }}</td>
           <!-- Acciones -->
           <td class="flex items-center gap-2">
             <button
-              (click)="openForm(brand)"
+              (click)="openForm(customer)"
               class="btn btn-ghost text-success rounded-full tooltip"
               data-tip="Actulizar"
             >
               <i class="bx bxs-edit-alt"></i>
             </button>
             <button
-              (click)="remove(brand)"
+              (click)="remove(customer)"
               class="btn btn-ghost text-error rounded-full tooltip"
               data-tip="Eliminar"
             >
@@ -52,7 +53,7 @@
           </td>
         </tr>
       } @empty {
-        <p>No hay brands...</p>
+        <p>No hay categorias...</p>
       }
     </tbody>
   </table>
@@ -60,9 +61,3 @@
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->
 <!-- *************************************** -->
-
-<app-pagination
-  [totalRegistros]="this.brandState().totalRegistros"
-  [(pagination)]="pagination"
-  (onChangePage)="changePage()"
-/>

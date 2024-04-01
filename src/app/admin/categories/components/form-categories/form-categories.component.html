@@ -23,7 +23,7 @@
           formControlName="name"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered input-primary w-full"
         />
         @if (name.invalid && name.touched) {
           @for (error of name.errors | keyvalue; track $index) {
@@ -43,7 +43,7 @@
           formControlName="description"
           type="text"
           placeholder="Type here"
-          class="textarea textarea-bordered w-full"
+          class="textarea textarea-bordered w-full textarea-primary"
         ></textarea>
         @if (description.invalid && description.touched) {
           @for (error of description.errors | keyvalue; track $index) {

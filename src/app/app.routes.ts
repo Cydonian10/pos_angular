@@ -27,6 +27,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@/admin/products/product-detail/product-detail.component'),
       },
+
+      // Users
+      {
+        path: 'customers',
+        loadComponent: () => import('@/admin/customers/customers.component'),
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('@/admin/users/users.component'),
+      },
     ],
   },
   {

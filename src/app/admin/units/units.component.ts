@@ -8,6 +8,7 @@ import { UnitStore } from '@/core/store/unit.store';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
 
 @Component({
   selector: 'app-units',
@@ -18,6 +19,7 @@ import { debounceTime } from 'rxjs';
     FormUnitComponent,
     DialogModule,
     ReactiveFormsModule,
+    AdminTitleComponent,
   ],
   templateUrl: './units.component.html',
 })

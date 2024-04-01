@@ -23,7 +23,7 @@
           formControlName="name"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered input-primary w-full"
         />
         @if (name.invalid && name.touched) {
           @for (error of name.errors | keyvalue; track $index) {
@@ -43,7 +43,7 @@
           formControlName="description"
           type="text"
           placeholder="Type here"
-          class="textarea textarea-bordered w-full"
+          class="textarea textarea-bordered w-full textarea-primary"
         ></textarea>
         @if (description.invalid && description.touched) {
           @for (error of description.errors | keyvalue; track $index) {
@@ -65,7 +65,7 @@
             formControlName="stock"
             type="number"
             placeholder="Type here"
-            class="input input-bordered w-full"
+            class="input input-bordered input-primary w-full"
           />
           @if (stock.invalid && stock.touched) {
             @for (error of stock.errors | keyvalue; track $index) {
@@ -84,7 +84,7 @@
             formControlName="purchasePrice"
             type="number"
             placeholder="Type here"
-            class="input input-bordered w-full"
+            class="input input-bordered input-primary w-full"
           />
           @if (purchasePrice.invalid && purchasePrice.touched) {
             @for (error of purchasePrice.errors | keyvalue; track $index) {
@@ -107,7 +107,7 @@
             formControlName="salePrice"
             type="number"
             placeholder="Type here"
-            class="input input-bordered w-full"
+            class="input input-bordered input-primary w-full"
           />
           @if (salePrice.invalid && salePrice.touched) {
             @for (error of salePrice.errors | keyvalue; track $index) {
@@ -127,7 +127,7 @@
             formControlName="barCode"
             type="number"
             placeholder="Type here"
-            class="input input-bordered w-full"
+            class="input input-bordered input-primary w-full"
           />
           @if (barCode.invalid && barCode.touched) {
             @for (error of barCode.errors | keyvalue; track $index) {
@@ -148,7 +148,7 @@
           formControlName="size"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered input-primary w-full"
         />
         @if (size.invalid && size.touched) {
           @for (error of size.errors | keyvalue; track $index) {
@@ -164,7 +164,10 @@
         <div class="label">
           <span class="label-text">Categorias</span>
         </div>
-        <select formControlName="categoryId" class="select select-bordered">
+        <select
+          formControlName="categoryId"
+          class="select select-bordered select-primary"
+        >
           <option disabled selected>Selecione una categoria</option>
           @for (category of data?.categories; track $index) {
             <option [value]="category.id">{{ category.name }}</option>
@@ -177,7 +180,10 @@
         <div class="label">
           <span class="label-text">Marcas</span>
         </div>
-        <select formControlName="brandId" class="select select-bordered">
+        <select
+          formControlName="brandId"
+          class="select select-bordered select-primary"
+        >
           <option disabled selected>Selecione una Marca</option>
           @for (brand of data?.brands; track $index) {
             <option [value]="brand.id">{{ brand.name }}</option>
@@ -192,7 +198,7 @@
         </div>
         <select
           formControlName="unitMeasurementId"
-          class="select select-bordered"
+          class="select select-bordered select-primary"
         >
           <option disabled selected>Selecione una unidad de medida</option>
           @for (unit of data?.units; track $index) {
@@ -210,7 +216,7 @@
           <input
             (change)="onFileSelected($event)"
             type="file"
-            class="file-input file-input-bordered w-full"
+            class="file-input file-input-bordered input-primary w-full"
           />
         </label>
         <!-- Input File -->

@@ -1,16 +1,9 @@
-<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
-  <h3 class="text-xl md:text-2xl">Categorias</h3>
-
-  <div class="space-x-3">
-    <app-filter
-      (onFilterData)="handleFilterData($event)"
-      (onDeleteFilter)="deleteFilter()"
-    />
-    <button (click)="openForm()" class="btn-sm md:btn-md btn btn-primary px-10">
-      Crear
-    </button>
-  </div>
-</div>
+<admin-title title="Productos" (onClick)="openForm()">
+  <app-filter
+    (onFilterData)="handleFilterData($event)"
+    (onDeleteFilter)="deleteFilter()"
+  />
+</admin-title>
 
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->

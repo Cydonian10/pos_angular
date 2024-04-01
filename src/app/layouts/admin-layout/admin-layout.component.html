@@ -92,8 +92,25 @@
         <li>
           <details>
             <summary class="mb-2">Inventario</summary>
+            <!-- LInks uno -->
             <ul class="space-y-1">
               @for (item of links; track $index) {
+                <li>
+                  <a routerLinkActive="active" [routerLink]="item.path">{{
+                    item.name
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary class="mb-2">Usuarios</summary>
+            <!-- LInks dos -->
+            <ul class="space-y-1">
+              @for (item of linkUsers; track $index) {
                 <li>
                   <a routerLinkActive="active" [routerLink]="item.path">{{
                     item.name

@@ -21,11 +21,18 @@ import { CategoryStore } from '@/core/store/category.store';
 import { UnitStore } from '@/core/store/unit.store';
 import { Router, RouterLink } from '@angular/router';
 import { FilterComponent } from './components/filter/filter.component';
+import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [NgClass, PaginationComponent, RouterLink, FilterComponent],
+  imports: [
+    NgClass,
+    PaginationComponent,
+    RouterLink,
+    FilterComponent,
+    AdminTitleComponent,
+  ],
   templateUrl: './products.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

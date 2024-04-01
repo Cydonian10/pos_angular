@@ -31,10 +31,14 @@ export class AdminLayout {
 
   links = [
     { path: '/admin/units', name: 'Unidades' },
-    { path: '/admin/product', name: 'Product' },
     { path: '/admin/categories', name: 'Categories' },
     { path: '/admin/brands', name: 'Marcas' },
     { path: '/admin/products', name: 'Products' },
+  ];
+
+  linkUsers = [
+    { path: '/admin/customers', name: 'Clientes' },
+    { path: '/admin/users', name: 'Empleados' },
   ];
 
   constructor() {

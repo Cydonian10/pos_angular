@@ -18,11 +18,17 @@ import { FormCategoriesComponent } from './components/form-categories/form-categ
 import { Pagination } from '@/api/interfaces/pagination.interface';
 import { PaginationComponent } from '@/components/pagination/pagination.component';
 import { debounceTime } from 'rxjs';
+import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, PaginationComponent],
+  imports: [
+    NgClass,
+    ReactiveFormsModule,
+    PaginationComponent,
+    AdminTitleComponent,
+  ],
   templateUrl: './categories.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

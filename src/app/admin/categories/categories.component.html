@@ -1,6 +1,5 @@
-<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
-  <h3 class="text-xl md:text-2xl">Categorias</h3>
-  <label class="input input-bordered flex items-center gap-2">
+<admin-title title="Categorias" (onClick)="openForm()">
+  <label class="input input-bordered flex items-center gap-2 input-primary">
     <input
       [formControl]="filter"
       type="text"
@@ -9,8 +8,7 @@
     />
     <i class="bx bx-search-alt-2"></i>
   </label>
-  <button (click)="openForm()" class="btn btn-primary">Crear</button>
-</div>
+</admin-title>
 
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->

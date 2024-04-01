@@ -13,11 +13,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBrandComponent } from './components/form-brand/form-brand.component';
 import { Brand } from '@/api/interfaces/brand.interface';
 import { BrandStore } from '@/core/store/brand.store.';
+import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
 
 @Component({
   selector: 'app-brands',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, PaginationComponent],
+  imports: [
+    NgClass,
+    ReactiveFormsModule,
+    PaginationComponent,
+    AdminTitleComponent,
+  ],
   templateUrl: './brands.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
