@@ -1,0 +1,87 @@
+<!-- component -->
+<div class="mt-28">
+  <div
+    class="bg-base-300 relative shadow rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto"
+  >
+    <div class="flex justify-center">
+      <!-- <img
+        src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+        alt=""
+        class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-base-100 transition duration-200 transform hover:scale-110"
+      /> -->
+      <div
+        class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-base-100 transition duration-200 transform hover:scale-110 bg-primary"
+      ></div>
+    </div>
+
+    <div class="mt-16">
+      <h1 class="font-bold text-center text-3xl text-content">
+        {{ user()?.name | titlecase }}
+      </h1>
+      <p class="text-center text-sm text-gray-400 font-medium">
+        Empleado de Servicio generales Jauja
+      </p>
+      <p>
+        <span> </span>
+      </p>
+      <div class="my-5 px-6">
+        <a
+          href="#"
+          class="text-base-content block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-base-200 hover:bg-black hover:text-white"
+          >Cumpleaños
+          <span class="font-bold">
+            {{ user()?.birthday | date }} , actualmente {{ user()?.age }} años
+          </span></a
+        >
+      </div>
+      <div class="flex justify-between items-center my-5 px-6">
+        <a
+          class="text-base-content hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3"
+          >{{ user()?.email | titlecase }}</a
+        >
+        <a
+          class="text-base-content hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3"
+          >{{ user()?.phone | titlecase }}</a
+        >
+        <a
+          class="text-base-content hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3"
+          >{{ user()?.salary }}</a
+        >
+      </div>
+
+      <div class="w-full">
+        <h3 class="font-medium text-base-content text-left px-6">Roles</h3>
+        <div
+          class="mt-5 w-full flex flex-col items-center overflow-hidden text-sm"
+        >
+          @for (rol of rolesShort(); track $index) {
+            <div
+              class="border-t border-gray-200 text-base-content py-4 pl-6 pr-3 w-full hover:bg-base-300 transition duration-150 flex gap-3 items-center justify-between"
+            >
+              <div class="flex gap-2">
+                <div class="h-6 rounded-full bg-primary w-6"></div>
+                {{ rol }}
+              </div>
+
+              @if (roles().includes(rol)) {
+                <button
+                  class="btn btn-error btn-sm"
+                  (click)="removeRol(user()!.email, rol)"
+                >
+                  Eliminar Rol
+                </button>
+              } @else {
+                <button
+                  class="btn btn-success btn-sm"
+                  (click)="addRol(user()!.email, rol)"
+                >
+                  Agregar Rol
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

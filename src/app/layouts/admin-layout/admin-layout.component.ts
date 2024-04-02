@@ -47,10 +47,8 @@ export class AdminLayout {
     if (theme == 'mydark') {
       this.isDark.setValue(true);
       this.theme.set('mydark');
-      document.documentElement.setAttribute('data-theme', this.theme());
     } else {
       this.theme.set('cupcake');
-      document.documentElement.setAttribute('data-theme', this.theme());
     }
 
     effect(() => {

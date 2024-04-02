@@ -34,10 +34,10 @@ export class ProductStore {
   public state = computed(() => this.#state());
 
   constructor() {
-    // effect(() => {
-    //   console.log('**** State Products *****');
-    //   console.log(this.#state());
-    // });
+    effect(() => {
+      console.log('**** State Products *****');
+      console.log(this.#state());
+    });
     this.getAll({ page: 1, quantityRecordsPerPage: 15 });
   }
 
@@ -116,7 +116,26 @@ export class ProductStore {
       next: () => {
         this.#state.update((s) => ({
           ...s,
-          discounts: [discount, ...s.discounts],
+          discounts: [{ id: 0, ...discount }, ...s.discounts],
+        }));
+      },
+      error: () => {
+        this.#alertSrv.showAlertError('Error 💥');
+      },
+      complete: () => {
+        this.#state.update((s) => ({ ...s, isLoading: false }));
+      },
+    });
+  }
+
+  removeDiscount(discount: Discount) {
+    this.#state.update((s) => ({ ...s, isLoading: true }));
+
+    this.#productSrv.removeDiscount(discount.id).subscribe({
+      next: () => {
+        this.#state.update((s) => ({
+          ...s,
+          discounts: s.discounts.filter((di) => di.id !== discount.id),
         }));
       },
       error: () => {

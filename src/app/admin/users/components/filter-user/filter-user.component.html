@@ -1,0 +1,50 @@
+<button
+  (click)="isOpen = !isOpen"
+  type="button"
+  cdkOverlayOrigin
+  class="btn-sm md:btn-md btn btn-outline btn-primary px-10 md:px-10"
+  #trigger="cdkOverlayOrigin"
+>
+  {{ isOpen ? "Cerrar Filtro" : "Abrir Filtro" }}
+</button>
+
+<!-- This template displays the overlay content and is connected to the button -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOffsetY]="10"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+  <ul class="menu p-5 shadow bg-base-300 rounded-box w-80">
+    <form [formGroup]="form">
+      <select
+        formControlName="rol"
+        class="select select-sm select-bordered w-full max-w-xs select-primary"
+      >
+        <option disabled selected>Selecione un rol</option>
+        @for (rol of roles(); track $index) {
+          <option [value]="rol">{{ rol }}</option>
+        }
+      </select>
+
+      <div class="flex justify-end mt-4">
+        <button
+          type="button"
+          (click)="handleFilterData()"
+          class="btn btn-ghost text-primary btn-sm"
+        >
+          <span>Aplicar</span>
+          <i class="bx bx-search-alt-2"></i>
+        </button>
+        <button
+          (click)="handleDeleteFilter()"
+          type="button"
+          class="btn btn-ghost text-error btn-sm"
+        >
+          <span>Quitar</span>
+          <i class="bx bxs-trash-alt"></i>
+        </button>
+      </div>
+    </form>
+  </ul>
+</ng-template>

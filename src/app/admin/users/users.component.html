@@ -1,1 +1,81 @@
-<p>users works!</p>
+<admin-title title="Empleados" (onClick)="openForm()">
+  <filter-user
+    [roles]="userState().roles"
+    (onDeleteFilter)="removeFilter()"
+    (onAddFilter)="filterData($event)"
+  />
+</admin-title>
+
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead class="sticky top-0">
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>DNI</th>
+        <th>Email</th>
+        <th>Salario</th>
+        <th>Edad</th>
+        <th>Telefono</th>
+        <th>Activo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for (user of userState().users; track $index) {
+        <tr>
+          <th>{{ $index + 1 }}</th>
+          <td
+            [ngClass]="{
+              'bg-base-100': $index % 2 == 0,
+              'bg-base-200': $index % 2 == 1
+            }"
+            class="sticky left-0"
+          >
+            {{ user.name }}
+          </td>
+          <td>{{ user.dni }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.salary }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.active }}</td>
+          <!-- Acciones -->
+          <td class="flex items-center gap-2">
+            <button
+              (click)="openForm(user)"
+              class="btn btn-ghost text-success rounded-full tooltip"
+              data-tip="Actulizar"
+            >
+              <i class="bx bxs-edit-alt"></i>
+            </button>
+            <button
+              (click)="remove(user)"
+              class="btn btn-ghost text-error rounded-full tooltip"
+              data-tip="Eliminar"
+            >
+              <i class="bx bxs-trash"></i>
+            </button>
+            <button
+              (click)="detalle(user)"
+              class="btn btn-ghost text-info rounded-full tooltip"
+              data-tip="Detalle"
+            >
+              <i class="bx bxs-detail"></i>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <p>No hay unidades...</p>
+      }
+    </tbody>
+  </table>
+</div>
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->

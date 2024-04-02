@@ -59,7 +59,7 @@ export class ProductService {
 
   removeDiscount(discountId: number) {
     return this.#http.delete<void>(
-      `${this.#url}/products/discounts/${discountId}`,
+      `${this.#url}/products/discount/${discountId}`,
     );
   }
 }

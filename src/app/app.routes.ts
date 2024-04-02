@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
 import { AdminLayout } from './layouts/admin-layout/admin-layout.component';
+import { authGuard } from './core/guards/auth.guard';
+import { redirectGuard } from './core/guards/redirect.guard';
 
 export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayout,
+    canActivate: [authGuard],
     children: [
       {
         path: 'units',
@@ -36,6 +39,22 @@ export const routes: Routes = [
       {
         path: 'users',
         loadComponent: () => import('@/admin/users/users.component'),
+      },
+      {
+        path: 'users/:id',
+        loadComponent: () =>
+          import('@/admin/users/detail-user/detail-user.component'),
+      },
+    ],
+  },
+
+  {
+    path: 'auth',
+    canActivate: [redirectGuard],
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('@/auth/login/login.component'),
       },
     ],
   },

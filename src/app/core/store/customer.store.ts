@@ -28,10 +28,10 @@ export class CustomerStore {
   state = computed(() => this.#state());
 
   constructor() {
-    effect(() => {
-      console.log('**** State Customer *****');
-      console.log(this.#state());
-    });
+    // effect(() => {
+    //   console.log('**** State Customer *****');
+    //   console.log(this.#state());
+    // });
     this.getAll();
   }
 

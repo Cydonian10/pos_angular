@@ -58,11 +58,11 @@ export default class ProductDetailComponent {
     this.#lacation.back();
   }
 
-  remove(discount: Discount) {
+  removeDiscount(discount: Discount) {
     const confirm = window.confirm(
       `Desea eliminar ${discount.name.toUpperCase()}`,
     );
 
-    console.log(confirm);
+    this.#productStore.removeDiscount(discount);
   }
 }
