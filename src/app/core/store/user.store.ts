@@ -43,7 +43,6 @@ export class UserStore {
     //   console.log('**** State Users *****');
     //   console.log(this.#state());
     // });
-    this.getAll();
     this.getRoles();
   }
 
@@ -153,7 +152,6 @@ export class UserStore {
             currentUser: userAuth,
           }));
           this.#alertSrv.showAlertSuccess(`${userAuth.name} Iniciaste Sessión`);
-          this.#router.navigateByUrl('/admin');
         },
         error: (error) => {
           if (error.error.errors) {

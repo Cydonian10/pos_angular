@@ -3,7 +3,12 @@ import { AdminTitleComponent } from '@/components/admin-title/admin-title.compon
 import { UserStore } from '@/core/store/user.store';
 import { Dialog } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormUserComponent } from './components/form-user/form-user.component';
 import { FilterUserComponent } from './components/filter-user/filter-user.component';
@@ -16,12 +21,16 @@ import { FilterUserComponent } from './components/filter-user/filter-user.compon
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class UsersComponent {
+export default class UsersComponent implements OnInit {
   #userStore = inject(UserStore);
   #router = inject(Router);
   #dialog = inject(Dialog);
 
   userState = this.#userStore.state;
+
+  ngOnInit(): void {
+    this.#userStore.getAll();
+  }
 
   openForm(user?: User) {
     this.#dialog

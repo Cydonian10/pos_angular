@@ -123,6 +123,22 @@
             </ul>
           </details>
         </li>
+
+        <li>
+          <details>
+            <summary class="mb-2">Ventas</summary>
+            <!-- LInks dos -->
+            <ul class="space-y-1">
+              @for (item of linkVentas; track $index) {
+                <li>
+                  <a routerLinkActive="active" [routerLink]="item.path">{{
+                    item.name
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </details>
+        </li>
       </ul>
     </div>
   </div>

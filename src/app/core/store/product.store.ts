@@ -34,10 +34,10 @@ export class ProductStore {
   public state = computed(() => this.#state());
 
   constructor() {
-    effect(() => {
-      console.log('**** State Products *****');
-      console.log(this.#state());
-    });
+    // effect(() => {
+    //   console.log('**** State Products *****');
+    //   console.log(this.#state());
+    // });
     this.getAll({ page: 1, quantityRecordsPerPage: 15 });
   }
 

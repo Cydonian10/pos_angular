@@ -41,6 +41,11 @@ export class AdminLayout {
     { path: '/admin/users', name: 'Empleados' },
   ];
 
+  linkVentas = [
+    { path: '/admin/cajas', name: 'Cajas Registradoras' },
+    { path: '/admin/users', name: 'Empleados' },
+  ];
+
   constructor() {
     const theme = localStorage.getItem('theme');
 

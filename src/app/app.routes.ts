@@ -4,6 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { redirectGuard } from './core/guards/redirect.guard';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
   {
     path: 'admin',
     component: AdminLayout,
@@ -44,6 +45,20 @@ export const routes: Routes = [
         path: 'users/:id',
         loadComponent: () =>
           import('@/admin/users/detail-user/detail-user.component'),
+      },
+
+      // ventas
+      {
+        path: 'cajas',
+        loadComponent: () =>
+          import('@/admin/cash-register/cash-register.component'),
+      },
+      {
+        path: 'cajas/:id',
+        loadComponent: () =>
+          import(
+            '@/admin/cash-register/detail-cash-register/detail-cash-register.component'
+          ),
       },
     ],
   },

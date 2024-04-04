@@ -7,7 +7,7 @@ export const redirectGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const isValidToken = tokenService.isValidToken();
   if (isValidToken) {
-    router.navigate(['/admin']);
+    router.navigate(['/admin/cajas']);
   }
   return true;
 };

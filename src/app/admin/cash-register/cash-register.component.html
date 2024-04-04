@@ -1,0 +1,84 @@
+<admin-title title="Cajas Registradoras" (onClick)="openUpdate()"></admin-title>
+
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead class="sticky top-0">
+      <tr>
+        <th></th>
+        <th class="sticky left-0 bg-base-100">Nombre</th>
+        <th>Dinero Incial</th>
+        <th>Dinero Actual</th>
+        <th>Abierto</th>
+        <th>UserId</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for (cashRe of cashRegisterState().cashRegisters; track $index) {
+        <tr>
+          <th>{{ $index + 1 }}</th>
+          <td
+            [ngClass]="{
+              'bg-base-100': $index % 2 == 0,
+              'bg-base-200': $index % 2 == 1
+            }"
+            class="sticky left-0"
+          >
+            {{ cashRe.name }}
+          </td>
+          <td>{{ cashRe.initialCash }}</td>
+          <td>
+            {{ cashRe.totalCash }}
+          </td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-error': !cashRe.open,
+                'badge-primary': cashRe.open
+              }"
+            >
+              {{ cashRe.open ? "open" : "close" }}
+            </span>
+          </td>
+          <td>
+            {{ cashRe.userId }}
+          </td>
+          <!-- Acciones -->
+          <td class="flex items-center gap-2">
+            <button
+              (click)="openUpdate(cashRe)"
+              class="btn btn-ghost text-success rounded-full tooltip"
+              data-tip="Actulizar"
+            >
+              <i class="bx bxs-edit-alt"></i>
+            </button>
+            <button
+              (click)="openCashRegister(cashRe)"
+              class="btn btn-ghost text-secondary rounded-full tooltip"
+              data-tip="Abrir Caja"
+            >
+              <i class="bx bxs-lock-open"></i>
+            </button>
+            <button
+              [routerLink]="[cashRe.id]"
+              class="btn btn-ghost text-info rounded-full tooltip"
+              data-tip="Abrir Caja"
+            >
+              <i class="bx bxs-lock-open"></i>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <p>No hay brands...</p>
+      }
+    </tbody>
+  </table>
+</div>
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
