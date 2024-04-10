@@ -1,0 +1,24 @@
+<div class="p-4 bg-base-300 rounded-md mt-3">
+  <div class="flex gap-3 items-start">
+    <div class="w-1/2">
+      <span class="px-2 font-semibold text-xs">Nombre</span>
+      <div class="p-2 bg-base-100 rounded-md text-sm">
+        {{ supplier().name }}
+      </div>
+    </div>
+    <div class="w-1/2">
+      <span class="px-2 font-semibold text-xs">Telefono</span>
+      <div class="p-2 bg-base-100 rounded-md text-sm">
+        {{ supplier().phone }}
+      </div>
+    </div>
+  </div>
+
+  @if (showButton()) {
+    <div class="flex items-start justify-end">
+      <button (click)="selectSupplier()" class="btn btn-sm btn-secondary mt-2">
+        Selecionar
+      </button>
+    </div>
+  }
+</div>

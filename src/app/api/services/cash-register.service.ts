@@ -55,14 +55,22 @@ export class CashRegisterService {
   }
 
   close(id: number) {
-    return this.#http.put<void>(`${this.#url}/cash-registers/close/${id}`, {
-      context: checkToken(),
-    });
+    return this.#http.put<CashRegister>(
+      `${this.#url}/cash-registers/close/${id}`,
+      {},
+      {
+        context: checkToken(),
+      },
+    );
   }
 
   selectCashRegister(id: number) {
-    return this.#http.put<CashRegister>(`${this.#url}/cash-registers/${id}`, {
-      context: checkToken(),
-    });
+    return this.#http.put<CashRegister>(
+      `${this.#url}/cash-registers/${id}/user`,
+      {},
+      {
+        context: checkToken(),
+      },
+    );
   }
 }

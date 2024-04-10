@@ -15,5 +15,6 @@ import {
 })
 export class AdminTitleComponent {
   title = input.required<string>(); // @Input set() {}
+  showButton = input<boolean>(true);
   onClick = output<void>();
 }

@@ -1,0 +1,51 @@
+<div
+  class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 print:hidden"
+>
+  <div class="flex flex-col md:flex-row gap-4">
+    <filter-search-product
+      (onSubmitFilterProduct)="handleFilterProducts($event)"
+      (onGetAllProducts)="handleGetProducts()"
+    >
+    </filter-search-product>
+    <button class="btn btn-sm btn-primary mt-8" (click)="selectCustomer()">
+      Seleccionar Usuario
+    </button>
+  </div>
+  <select-cash-register
+    [cashRegisters]="cashRegisterState().cashRegisters"
+    [userAuth]="userState().currentUser!"
+    (onCloseCashRegister)="handleCloseCashRegister($event)"
+    (onSelectCashRegister)="handleSelectCashRegister($event)"
+  ></select-cash-register>
+</div>
+
+<div class="flex flex-col md:flex-row gap-4 items-start mt-5">
+  <!-- products -->
+  <div class="space-y-2 min-w-[300px] max-w-[450px] w-full print:hidden">
+    <h4>Producto(s)</h4>
+    @for (product of productState().products; track $index) {
+      <!-- Car -->
+      <sale-product
+        [product]="product"
+        (onAddPostItem)="handleAddPostItem($event)"
+      />
+    } @empty {
+      <p class="text-error font-bold p-1">No hay productos</p>
+    }
+  </div>
+
+  <!-- items venta -->
+  <div class="w-full">
+    <pos-items-table
+      [posItems]="posSrv.posItems()"
+      [igv]="posSrv.igv()"
+      [totalDescuento]="posSrv.totalDescuento()"
+      [totalPrice]="posSrv.totalPrice()"
+      [subTotal]="posSrv.subTotal()"
+      [cashRegisterId]="cashRegisterState().selectCashRegister?.id"
+      [customer]="customerSelected()"
+      (onClearProductItems)="clearPosItems()"
+      (onRemoveProduct)="removePosItem($event)"
+    />
+  </div>
+</div>

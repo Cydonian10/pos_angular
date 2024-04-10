@@ -22,8 +22,8 @@ module.exports = {
           warning: "#fde047",
           error: "#E5484D",
 
-          "--rounded-box": "0rem",
-          "--rounded-btn": "0rem",
+          "--rounded-box": "0.5rem",
+          "--rounded-btn": "0.5rem",
           "--rounded-badge": "2rem",
           "--border-btn": "1px",
         },

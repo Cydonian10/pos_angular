@@ -1,0 +1,60 @@
+<div class="card md:w-[600px] bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Clientes</h2>
+    <!-- *************************************** -->
+    <!-- ******** Table *********************** -->
+    <!-- *************************************** -->
+    <div class="overflow-x-auto">
+      <table class="table table-zebra table-sm">
+        <!-- head -->
+        <thead class="sticky top-0">
+          <tr>
+            <th></th>
+            <th class="sticky left-0 bg-base-100">Nombre</th>
+            <th>DNI</th>
+            <th>Puntos</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          @for (customer of customers; track $index) {
+            <tr>
+              <th>{{ $index + 1 }}</th>
+              <td
+                [ngClass]="{
+                  'bg-base-100': $index % 2 == 0,
+                  'bg-base-200': $index % 2 == 1
+                }"
+                class="sticky left-0"
+              >
+                {{ customer.name }}
+              </td>
+              <td>
+                {{ customer.dni }}
+              </td>
+              <td>
+                {{ customer.points }}
+              </td>
+              <!-- Acciones -->
+              <td class="flex items-center gap-2">
+                <button
+                  class="btn btn-ghost text-success rounded-full tooltip"
+                  data-tip="Selecionar"
+                  (click)="dialogRef.close(customer)"
+                >
+                  <i class="bx bxs-edit-alt"></i>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <p>No hay descuentos...</p>
+          }
+        </tbody>
+      </table>
+    </div>
+    <!-- *************************************** -->
+    <!-- ******** Table *********************** -->
+    <!-- *************************************** -->
+  </div>
+</div>

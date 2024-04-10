@@ -16,6 +16,7 @@ import { SideComponent } from '@/components/side/side.component';
 import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
 import { KeyValuePipe } from '@angular/common';
 import { FormErrorPipe } from '@/core/pipes/form-error.pipe';
+import { NumberOnlyDirective } from '@/core/directives/number-only.directive';
 
 @Component({
   selector: 'app-form-unit',

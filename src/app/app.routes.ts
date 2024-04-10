@@ -60,6 +60,40 @@ export const routes: Routes = [
             '@/admin/cash-register/detail-cash-register/detail-cash-register.component'
           ),
       },
+      {
+        path: 'sales',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('@/admin/sales/sales.component'),
+          },
+          {
+            path: 'report',
+            loadComponent: () =>
+              import('@/admin/sales-report/sales-report.component'),
+          },
+        ],
+      },
+      {
+        path: 'suppliers',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('@/admin/suppliers/suppliers.component'),
+          },
+          {
+            path: 'purchases',
+            loadComponent: () =>
+              import('@/admin/purchases/purchases.component'),
+          },
+          {
+            path: 'report',
+            loadComponent: () =>
+              import('@/admin/purchases-report/purchases-report.component'),
+          },
+        ],
+      },
     ],
   },
 

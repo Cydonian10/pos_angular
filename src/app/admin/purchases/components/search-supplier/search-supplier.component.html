@@ -1,0 +1,14 @@
+<p class="text-base-content font-bold my-2">Buscador de Proveedor</p>
+<div class="join w-full">
+  <input
+    [formControl]="value"
+    type="text"
+    class="input-sm input input-bordered join-item select-primary w-full"
+    placeholder="Buscar por nombre"
+  />
+  <div class="indicator">
+    <button (click)="handleSubmit()" class="btn btn-primary join-item btn-sm">
+      Buscar
+    </button>
+  </div>
+</div>

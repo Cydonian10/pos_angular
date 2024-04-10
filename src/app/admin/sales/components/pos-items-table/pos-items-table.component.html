@@ -1,0 +1,158 @@
+@if (customer()) {
+  <div class="mb-3">
+    <p class="flex gap-2 items-center">
+      <span class="font-semibold text-sm">Cliente: </span>
+      <span>{{ customer()?.name }}</span>
+    </p>
+  </div>
+} @else {
+  <span class="font-semibold text-sm text-error">Selecionar Usuario !!</span>
+}
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+<div class="overflow-x-auto">
+  @if (posItems().length !== 0) {
+    <table class="table table-zebra table-xs text-base-content">
+      <!-- head -->
+      <thead class="sticky top-0">
+        <tr>
+          <th></th>
+          <th class="sticky left-0">Nombre</th>
+          <th>Cantidad</th>
+          <th>Unidad</th>
+          <th>Descuento</th>
+          <th>Total Price</th>
+          <th class="print:hidden">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        @for (statePost of posItems(); track $index) {
+          <tr>
+            <th>{{ $index + 1 }}</th>
+            <td class="sticky left-0">
+              {{ statePost.product.name }}
+            </td>
+            <td class="text-right">{{ statePost.quantity }}</td>
+            <td>{{ statePost.product.unitMeasurement }}</td>
+            <td>{{ statePost.discount | currency: "s/ " : "symbol" }}</td>
+            <td>{{ statePost.subTotal | currency: "s/ " : "symbol" }}</td>
+            <!-- Acciones -->
+            <td class="flex gap-2 print:hidden">
+              <button
+                (click)="this.onRemoveProduct.emit(statePost)"
+                class="btn btn-ghost text-error rounded-full tooltip"
+                data-tip="Eliminar"
+              >
+                <i class="bx bxs-trash"></i>
+              </button>
+              <button
+                (click)="openDiscounts(statePost)"
+                class="btn btn-ghost text-primary rounded-full tooltip"
+                data-tip="Ver Descuentos"
+              >
+                <i class="bx bxs-discount"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot class="text-base-content">
+        <tr>
+          <td></td>
+          <td class="text-right" colspan="4">Sub Total</td>
+          <td colspan="2">{{ subTotal() | currency: "s/ " : "symbol" }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right" colspan="4">IGV 18%</td>
+          <td colspan="2">{{ igv() | currency: "s/ " : "symbol" }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right" colspan="4">Descuento</td>
+          <td colspan="2">
+            {{ totalDescuento() | currency: "s/ " : "symbol" }}
+          </td>
+        </tr>
+        @if (paymentMethod.getRawValue() === "cash") {
+          <tr class="">
+            <td></td>
+            <td class="text-right" colspan="4">Pago</td>
+            <td colspan="2">
+              s/<input [formControl]="cashPayment" type="number" class="w-16" />
+              <button
+                (click)="calculateCashReturn()"
+                class="btn btn-secondary btn-xs print:hidden"
+              >
+                Calcular
+              </button>
+            </td>
+          </tr>
+        }
+        @if (paymentMethod.getRawValue() === "cash") {
+          <tr class="">
+            <td></td>
+            <td class="text-right" colspan="4">Vuelto</td>
+            <td colspan="2">
+              {{ cashReturn | currency: "s/ " : "symbol" }}
+            </td>
+          </tr>
+        }
+        <tr>
+          <td></td>
+          <td class="text-right" colspan="4">Total</td>
+          <td colspan="2">{{ totalPrice() | currency: "s/ " : "symbol" }}</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="flex gap-10 items-center justify-between print:hidden">
+      <!-- Radio buttons -->
+      <div class="">
+        <div class="form-control">
+          <label class="label cursor-pointer space-x-2">
+            <span class="label-text">Efectivo</span>
+            <input
+              type="radio"
+              name="paymentMethod"
+              class="radio checked:bg-primary"
+              [formControl]="paymentMethod"
+              value="cash"
+            />
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="label cursor-pointer space-x-2">
+            <span class="label-text">Tarjeta</span>
+            <input
+              type="radio"
+              name="paymentMethod"
+              class="radio checked:bg-primary"
+              [formControl]="paymentMethod"
+              value="card"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <button (click)="onClearProductItems.emit()" class="btn btn-error">
+          Limpiar Caja
+        </button>
+        <button (click)="handleSubmitCreateSaleDto()" class="btn btn-primary">
+          Generar Venta
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="p-3 w-full text-center text-error font-semibold">
+      No hay productos que vender
+    </div>
+  }
+</div>
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->

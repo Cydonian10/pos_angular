@@ -1,0 +1,123 @@
+<admin-title title="Compras a proveedores" [showButton]="false"></admin-title>
+
+@if (isLoading()) {
+  <div
+    class="fixed bg-black/20 inset-0 w-screen h-screen flex justify-center items-center z-10"
+  >
+    <span class="loading loading-dots w-[100px]"></span>
+  </div>
+}
+
+<div class="flex gap-4 items-start">
+  <!-- Buscar Infomacion de la compra -->
+  <div class="min-w-[300px] max-w-[450px] w-full print:hidden">
+    <!-- Buscador -->
+    <search-product
+      (onSubmitSearchProduct)="handleSubmitSearchProduct($event)"
+      (onClear)="handleClearProducts()"
+    >
+    </search-product>
+    <!-- Productos -->
+    @for (product of products(); track $index) {
+      <purchase-product
+        [product]="product"
+        (onPartialPurchaseDetail)="addPurchaseDetail($event)"
+      />
+    } @empty {
+      <div class="p-4 bg-base-300 rounded-md mt-3">
+        <span class="font-semibold text-info block text-center"
+          >Buscar producto</span
+        >
+      </div>
+    }
+    <!-- Proveedor -->
+    <search-supplier
+      (onSubmitSearchSupplier)="submitSearchSupplier($event)"
+    ></search-supplier>
+
+    @if (currentSupplier()) {
+      <purchase-suppliers
+        [supplier]="currentSupplier()!"
+        [showButton]="false"
+      />
+    } @else {
+      @for (supplier of suppliers(); track $index) {
+        <purchase-suppliers
+          [supplier]="supplier"
+          (onSelectSupplier)="selectSupplier($event)"
+        />
+      }
+    }
+  </div>
+
+  <!-- Table -->
+  <div class="w-full print:-mt-20">
+    <!-- *************************************** -->
+    <!-- ******** Table *********************** -->
+    <!-- *************************************** -->
+    <div class="overflow-x-auto">
+      @if (shoppingCart.shoppinCart().length !== 0) {
+        <table class="table table-zebra table-xs text-base-content">
+          <!-- head -->
+          <thead class="sticky top-0">
+            <tr>
+              <th></th>
+              <th class="sticky left-0">Nombre</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Precio de compra</th>
+              <th>Subto total</th>
+              <th class="print:hidden">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            @for (state of shoppingCart.shoppinCart(); track $index) {
+              <tr>
+                <th>{{ $index + 1 }}</th>
+                <td class="sticky left-0">
+                  {{ state.product.name }}
+                </td>
+                <td>{{ state.quantity }}</td>
+                <td>{{ state.product.unitMeasurement }}</td>
+                <td>{{ state.purchasePrice | currency: "s/ " : "symbol" }}</td>
+                <td>{{ state.subTotal | currency: "s/ " : "symbol" }}</td>
+                <!-- Acciones -->
+                <td class="flex gap-2 print:hidden">
+                  <button
+                    class="btn btn-ghost text-error rounded-full tooltip"
+                    data-tip="Eliminar"
+                  >
+                    <i class="bx bxs-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+          <tfoot class="text-base-content">
+            <tr>
+              <td></td>
+              <td class="text-right" colspan="4">Total</td>
+              <td colspan="2">
+                {{ shoppingCart.total() | currency: "s/" : "symbol" }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="flex gap-10 items-center justify-between print:hidden mt-2">
+          <button (click)="handleClearItemsShopping()" class="btn btn-error">
+            Limpiar Caja
+          </button>
+          <button (click)="submitGeneratePurchase()" class="btn btn-primary">
+            Guardar
+          </button>
+        </div>
+      } @else {
+        <div class="p-3 w-full text-center text-info font-semibold">
+          No ha agregado ningun producto
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="card md:w-[600px] bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">{{ data?.product?.name | uppercase }}</h2>
+    <!-- *************************************** -->
+    <!-- ******** Table *********************** -->
+    <!-- *************************************** -->
+    <div class="overflow-x-auto">
+      <table class="table table-zebra table-sm">
+        <!-- head -->
+        <thead class="sticky top-0">
+          <tr>
+            <th></th>
+            <th class="sticky left-0 bg-base-100">Nombre</th>
+            <th>Cantidad Minima</th>
+            <th>Precio a descontar</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          @for (discount of discounts(); track $index) {
+            <tr>
+              <th>{{ $index + 1 }}</th>
+              <td
+                [ngClass]="{
+                  'bg-base-100': $index % 2 == 0,
+                  'bg-base-200': $index % 2 == 1
+                }"
+                class="sticky left-0"
+              >
+                {{ discount.name }}
+              </td>
+              <td>
+                {{ discount.minimumDiscountQuantity }}
+                {{ data?.product?.unitMeasurement }}(s)
+              </td>
+              <td>
+                {{ discount.discountedPrice | currency: "s/ " : "symbol" }}
+              </td>
+              <!-- Acciones -->
+              <td class="flex items-center gap-2">
+                <button
+                  (click)="applyDiscount(discount.discountedPrice)"
+                  class="btn btn-ghost text-success rounded-full tooltip"
+                  data-tip="Actulizar"
+                >
+                  <i class="bx bxs-edit-alt"></i>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <p>No hay descuentos...</p>
+          }
+        </tbody>
+      </table>
+    </div>
+    <!-- *************************************** -->
+    <!-- ******** Table *********************** -->
+    <!-- *************************************** -->
+  </div>
+</div>

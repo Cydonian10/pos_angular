@@ -6,4 +6,5 @@
 
 body {
   @apply bg-base-100 h-screen w-screen;
+  @apply overflow-x-hidden;
 }

@@ -1,5 +1,7 @@
 <admin-title title="Unidades de Medida" (onClick)="openForm()">
-  <label class="input input-bordered flex items-center gap-2 input-primary">
+  <label
+    class="input input-bordered flex items-center gap-2 input-primary input-sm"
+  >
     <input
       [formControl]="filter"
       type="text"
@@ -14,9 +16,9 @@
 <!-- ******** Table *********************** -->
 <!-- *************************************** -->
 <div class="overflow-x-auto">
-  <table class="table table-zebra">
+  <table class="table table-zebra shadow-lg">
     <!-- head -->
-    <thead class="sticky top-0">
+    <thead class="sticky top-0 bg-base-300 text-base-content">
       <tr>
         <th></th>
         <th>Name</th>

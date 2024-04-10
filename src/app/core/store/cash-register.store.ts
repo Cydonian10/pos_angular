@@ -32,10 +32,10 @@ export class CashRegisterStore {
   state = computed(() => this.#state());
 
   constructor() {
-    effect(() => {
-      console.log('**** State Cash Register *****');
-      console.log(this.#state());
-    });
+    // effect(() => {
+    //   console.log('**** State Cash Register *****');
+    //   console.log(this.#state());
+    // });
   }
 
   getAll() {
@@ -99,10 +99,10 @@ export class CashRegisterStore {
     });
   }
 
-  selectedCashRegister(cashRegister: CashRegister) {
+  selectedCashRegister(entity: CashRegister) {
     this.#state.update((s) => ({ ...s, isLoading: true }));
 
-    this.#cashRegisterSrv.selectCashRegister(cashRegister.id).subscribe({
+    this.#cashRegisterSrv.selectCashRegister(entity.id).subscribe({
       next: (cashRegister: CashRegister) => {
         this.#state.update((s) => ({
           ...s,
@@ -119,7 +119,12 @@ export class CashRegisterStore {
           `El elmento ${cashRegister.name} abierto`,
         );
       },
-      error: (resp) => this.#alertSrv.showAlertError(resp.error.msg),
+      error: (resp) => {
+        if (resp.error.msg) {
+          return this.#alertSrv.showAlertError(resp.error.msg);
+        }
+        console.log(resp);
+      },
       complete: () => {
         this.#state.update((s) => ({ ...s, isLoading: false }));
       },
@@ -131,5 +136,32 @@ export class CashRegisterStore {
 
     cashRegister &&
       this.#state.update((s) => ({ ...s, selectCashRegister: cashRegister }));
+  }
+
+  closeCashRegister(cashRegister: CashRegister) {
+    this.#state.update((s) => ({ ...s, isLoading: true }));
+
+    this.#cashRegisterSrv.close(cashRegister.id).subscribe({
+      next: (cashRegister: CashRegister) => {
+        this.#state.update((s) => ({
+          ...s,
+          cashRegisters: s.cashRegisters.map((cr) => {
+            if (cr.id === cashRegister.id) {
+              cr = cashRegister;
+            }
+            return cr;
+          }),
+        }));
+        this.#state.update((s) => ({ ...s, selectCashRegister: null }));
+        this.#localStorageSrv.save(null, 'cash');
+        this.#alertSrv.showAlertSuccess(
+          `La caja ${cashRegister.name} fue cerrada`,
+        );
+      },
+      error: (resp) => this.#alertSrv.showAlertError(resp.error.msg),
+      complete: () => {
+        this.#state.update((s) => ({ ...s, isLoading: false }));
+      },
+    });
   }
 }

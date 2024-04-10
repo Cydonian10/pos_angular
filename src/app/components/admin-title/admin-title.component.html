@@ -1,13 +1,18 @@
-<div class="space-y-2 md:space-y-0 md:flex items-center justify-between py-4">
+<div
+  class="space-y-2 md:space-y-0 md:flex items-center justify-between print:hidden"
+>
   <h3 class="text-xl md:text-2xl">{{ title() }}</h3>
 
   <div class="flex flex-col gap-3 md:flex-row">
     <ng-content />
-    <button
-      (click)="onClick.emit()"
-      class="btn-sm md:btn-md btn btn-primary px-10 md:px-10"
-    >
-      Crear
-    </button>
+    @if (showButton()) {
+      <button
+        (click)="onClick.emit()"
+        class="btn-sm btn btn-primary px-10 md:px-10"
+      >
+        Crear
+      </button>
+    }
   </div>
 </div>
+<div class="divider"></div>

@@ -1,14 +1,13 @@
-<p>detail-cash-register works!</p>
+<div class="flex justify-between items-start mt-7">
+  <button class="btn btn-outline btn-info" (click)="location.back()">
+    Atras
+  </button>
 
-<button class="btn btn-outline btn-info" (click)="location.back()">
-  Atras
-</button>
-
-<button class="btn btn-outline btn-info" (click)="openNewEgreso()">
-  Nuevo Egreso
-</button>
-
-<p>{{ total() }}</p>
+  <button class="btn btn-outline btn-info" (click)="openNewEgreso()">
+    Nuevo Egreso
+  </button>
+</div>
+<p class="mt-5">{{ total() }}</p>
 
 <!-- ******** Table *********************** -->
 <!-- *************************************** -->

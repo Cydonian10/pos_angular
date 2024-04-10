@@ -2,8 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Pagination } from '../interfaces/pagination.interface';
-import { FilterProduct, Product } from '../interfaces/product.interface';
+import {
+  FilterProduct,
+  HistoryProductPrice,
+  Product,
+} from '../interfaces/product.interface';
 import { CreateDiscountDto, Discount } from '../interfaces/discount.interface';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +49,12 @@ export class ProductService {
     });
   }
 
+  filterOneData(filter: any) {
+    return this.#http.get<Product[]>(
+      `${this.#url}/products/filter?${filter.filter}=${filter.value}`,
+    );
+  }
+
   addDiscount(discounts: CreateDiscountDto[], productId: number) {
     return this.#http.put<void>(
       `${this.#url}/products/add-discounts/${productId}`,
@@ -60,6 +71,12 @@ export class ProductService {
   removeDiscount(discountId: number) {
     return this.#http.delete<void>(
       `${this.#url}/products/discount/${discountId}`,
+    );
+  }
+
+  historyPrice(productId: number) {
+    return this.#http.get<HistoryProductPrice[]>(
+      `${this.#url}/products/history/${productId}`,
     );
   }
 }

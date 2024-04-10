@@ -36,3 +36,11 @@ export interface FilterProduct {
   stock: number | null;
   barCode: number | null;
 }
+
+export interface HistoryProductPrice {
+  id: number;
+  productId: number;
+  oldPrice: number;
+  name: string;
+  date: Date;
+}

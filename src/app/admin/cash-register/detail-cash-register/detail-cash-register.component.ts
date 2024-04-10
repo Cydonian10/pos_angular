@@ -46,7 +46,7 @@ export default class DetailCashRegisterComponent implements OnInit {
         }),
         switchMap((cashRegister: CashRegister) =>
           this.#egresoSrv.get({
-            createDate: cashRegister.date,
+            createDate: new Date().toISOString(),
             cashRegisterId: cashRegister.id,
           }),
         ),

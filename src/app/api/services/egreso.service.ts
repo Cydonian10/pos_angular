@@ -12,7 +12,7 @@ export class EgresoService {
 
   #url = environment.urlapi;
 
-  get(dtoParams: { createDate: Date; cashRegisterId: number }) {
+  get(dtoParams: { createDate: string; cashRegisterId: number }) {
     return this.#http.get<Egreso[]>(
       `${this.#url}/egresos/search?createDate=${dtoParams.createDate}&cashRegisterId=${dtoParams.cashRegisterId}`,
       { context: checkToken() },

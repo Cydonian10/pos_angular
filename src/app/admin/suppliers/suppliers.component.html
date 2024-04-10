@@ -1,0 +1,61 @@
+<admin-title title="Proveedores" (onClick)="openForm()"></admin-title>
+
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->
+
+@if (loading()) {
+  <span>Loading....</span>
+} @else {
+  <div class="overflow-x-auto">
+    <table class="table shadow-lg">
+      <!-- head -->
+      <thead class="sticky top-0 bg-base-300 text-base-content">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Avenida</th>
+          <th>Telefono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        @for (supplier of suppliers(); track $index) {
+          <tr
+            class="hover:bg-base-300 cursor-cell transition-colors duration-150"
+          >
+            <th>{{ $index + 1 }}</th>
+            <td class="sticky left-0">
+              {{ supplier.name }}
+            </td>
+            <td>{{ supplier.adress }}</td>
+            <td>{{ supplier.phone }}</td>
+            <!-- Acciones -->
+            <td class="flex items-center gap-2">
+              <button
+                (click)="openForm(supplier)"
+                class="btn btn-ghost text-success rounded-full tooltip"
+                data-tip="Actulizar"
+              >
+                <i class="bx bxs-edit-alt"></i>
+              </button>
+              <button
+                (click)="remove(supplier)"
+                class="btn btn-ghost text-error rounded-full tooltip"
+                data-tip="Eliminar"
+              >
+                <i class="bx bxs-trash"></i>
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <p>No hay unidades...</p>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+<!-- *************************************** -->
+<!-- ******** Table *********************** -->
+<!-- *************************************** -->

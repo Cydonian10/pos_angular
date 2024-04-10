@@ -1,0 +1,89 @@
+<div class="bg-base-300 h-screen absolute right-0 w-96 md:w-[700px]">
+  <button
+    (click)="dialogRef.close(false)"
+    class="absolute top-2 right-5 btn btn-ghost text-primary z-50"
+  >
+    <i class="bx bx-window-close text-xl"></i>
+  </button>
+  <div class="bg-base-200 p-5 sticky top-0">
+    <h3 class="text-xl">
+      {{ data ? "Actualizar Proveedor" : "Crear Proveedor" }}
+    </h3>
+  </div>
+
+  <!-- Formulario -->
+  <div class="p-5 h-[calc(100vh_-_156px)] bg-base-100 overflow-y-auto">
+    <form [formGroup]="form">
+      <!-- Input Nombre -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Nombre</span>
+        </div>
+        <input
+          formControlName="name"
+          type="text"
+          placeholder="Ejemplo: Royal"
+          class="input input-bordered input-primary w-full"
+        />
+
+        @if (name.invalid && name.touched) {
+          @for (error of name.errors | keyvalue; track $index) {
+            <span class="label-text text-error font-bold">{{
+              error | formerror: { minl: 3 }
+            }}</span>
+          }
+        }
+      </label>
+
+      <!-- Input Nombre -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Avenida o Direccion</span>
+        </div>
+        <input
+          formControlName="adress"
+          type="text"
+          placeholder="Ejem. Av. Ricardo Palma"
+          class="input input-bordered input-primary w-full"
+        />
+
+        @if (adress.invalid && adress.touched) {
+          @for (error of adress.errors | keyvalue; track $index) {
+            <span class="label-text text-error font-bold">{{
+              error | formerror: { minl: 3 }
+            }}</span>
+          }
+        }
+      </label>
+
+      <!-- Input Nombre -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Celular o Telefono</span>
+        </div>
+        <input
+          formControlName="phone"
+          type="text"
+          placeholder="Ejem. 123456789"
+          class="input input-bordered input-primary w-full"
+        />
+      </label>
+
+      @if (phone.invalid && phone.touched) {
+        @for (error of phone.errors | keyvalue; track $index) {
+          <span class="label-text text-error font-bold">{{
+            error | formerror: { minl: 3 }
+          }}</span>
+        }
+      }
+    </form>
+  </div>
+  <div footer class="flex justify-end gap-4 p-5 bg-base-200 sticky bottom-0">
+    <button (click)="dialogRef.close(false)" class="btn btn-outline btn-error">
+      Cancelar
+    </button>
+    <button (click)="handleSubmit()" class="btn btn-primary">
+      Guardar Cambios
+    </button>
+  </div>
+</div>

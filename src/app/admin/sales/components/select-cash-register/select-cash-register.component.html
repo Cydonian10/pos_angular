@@ -1,0 +1,52 @@
+<button
+  (click)="isOpen = !isOpen"
+  type="button"
+  cdkOverlayOrigin
+  class="btn-sm md:btn-md btn btn-outline btn-primary px-10 md:px-10"
+  #trigger="cdkOverlayOrigin"
+>
+  Manejar Caja
+</button>
+
+<!-- This template displays the overlay content and is connected to the button -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOffsetY]="10"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+  <ul class="menu p-5 shadow bg-base-300 rounded-box w-64 space-y-4">
+    @for (cashRegister of cashRegisters(); track $index) {
+      <div>
+        @if (cashRegister.userId) {
+          @if (cashRegister.userId === userAuth().id) {
+            <div class="flex items-center gap-3">
+              <p class="w-full">{{ cashRegister.name }}</p>
+              <button
+                (click)="onCloseCashRegister.emit(cashRegister)"
+                class="btn btn-sm btn-warning w-[130px]"
+              >
+                Cerrar Caja
+              </button>
+            </div>
+          } @else {
+            <div class="flex items-center gap-3">
+              <p class="w-full">{{ cashRegister.name }}</p>
+              <div class="badge badge-accent">Caja Ocupada</div>
+            </div>
+          }
+        } @else {
+          <div class="flex items-center gap-3">
+            <p class="w-full">{{ cashRegister.name }}</p>
+            <button
+              (click)="onSelectCashRegister.emit(cashRegister)"
+              class="btn btn-primary btn-sm w-[130px]"
+            >
+              Seleccionar Caja
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </ul>
+</ng-template>

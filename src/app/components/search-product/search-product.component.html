@@ -1,0 +1,48 @@
+<p class="text-base-content font-bold mb-2">Buscador de producto</p>
+<div class="join w-full">
+  <div class="indicator">
+    <button (click)="handleClear()" class="btn btn-primary join-item btn-sm">
+      Limpiar
+    </button>
+  </div>
+  @switch (filter.getRawValue()) {
+    @case ("barCode") {
+      <input
+        [formControl]="value"
+        class="input-sm input input-bordered join-item select-primary w-full"
+        placeholder="Buscar por bar code"
+        type="number"
+      />
+    }
+    @case ("price") {
+      <input
+        [formControl]="value"
+        class="input-sm input input-bordered join-item select-primary w-full"
+        placeholder="Burcar por precio"
+        type="number"
+      />
+    }
+    @case ("name") {
+      <input
+        [formControl]="value"
+        type="text"
+        class="input-sm input input-bordered join-item select-primary w-full"
+        placeholder="Buscar por nombre"
+      />
+    }
+  }
+  <select
+    [formControl]="filter"
+    class="select select-bordered join-item select-primary select-sm"
+  >
+    <option disabled selected>Filter</option>
+    <option [value]="'barCode'">BarCode</option>
+    <option [value]="'name'">Nombre</option>
+    <option [value]="'price'">Precio</option>
+  </select>
+  <div class="indicator">
+    <button (click)="handleSubmit()" class="btn btn-primary join-item btn-sm">
+      Buscar
+    </button>
+  </div>
+</div>

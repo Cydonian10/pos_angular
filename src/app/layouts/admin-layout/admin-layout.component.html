@@ -7,7 +7,7 @@
   <div class="drawer-content">
     <!-- Page content here -->
     <!-- NavBarComponent -->
-    <div class="navbar bg-base-100">
+    <div class="navbar bg-primary print:hidden mb-4">
       <div class="flex-1 space-x-4">
         <label class="flex items-center cursor-pointer gap-2 my-3">
           <i class="bx bx-brightness text-xl text-amber-500"></i>
@@ -21,7 +21,10 @@
         </label>
       </div>
       <div class="flex-none gap-2">
-        <button routerLink="/auth/login" class="btn btn-outline btn-secondary">
+        <button
+          routerLink="/auth/login"
+          class="btn btn-outline outline-primary"
+        >
           Login
         </button>
         <div class="dropdown dropdown-end">
@@ -63,13 +66,17 @@
 
     <!-- Main  -->
     <main class="container m-auto px-1">
-      <router-outlet />
+      <div class="card bg-base-100 shadow-xl card-bordered">
+        <div class="card-body">
+          <router-outlet />
+        </div>
+      </div>
     </main>
     <!-- Main  -->
   </div>
 
   <!-- Drawer Component -->
-  <div class="drawer-side">
+  <div class="drawer-side print:hidden">
     <label
       for="my-drawer"
       aria-label="close sidebar"
@@ -131,9 +138,31 @@
             <ul class="space-y-1">
               @for (item of linkVentas; track $index) {
                 <li>
-                  <a routerLinkActive="active" [routerLink]="item.path">{{
-                    item.name
-                  }}</a>
+                  <a
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="item.path"
+                    >{{ item.name }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary class="mb-2">Proveedors</summary>
+            <!-- LInks dos -->
+            <ul class="space-y-1">
+              @for (link of proveedors; track $index) {
+                <li>
+                  <a
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="link.path"
+                    >{{ link.name }}</a
+                  >
                 </li>
               }
             </ul>

@@ -152,7 +152,6 @@ export class ProductStore {
 
     this.#productSrv.getDiscounts(productId).subscribe({
       next: (discounts: Discount[]) => {
-        console.log(discounts);
         this.#state.update((s) => ({ ...s, discounts }));
       },
       error: () => {},
@@ -166,6 +165,23 @@ export class ProductStore {
     this.#state.update((s) => ({ ...s, isLoading: true }));
 
     this.#productSrv.filterData(filter).subscribe({
+      next: (products: Product[]) => {
+        this.#state.update((s) => ({
+          ...s,
+          products,
+          totalRegistros: products.length,
+        }));
+        this.#alertSrv.showAlertSuccess(`Se aplico el filtro`);
+      },
+      error: () => this.#alertSrv.showAlertError('Error 💥'),
+      complete: () => this.#state.update((s) => ({ ...s, isLoading: false })),
+    });
+  }
+
+  filterOneData(filter: any) {
+    this.#state.update((s) => ({ ...s, isLoading: true }));
+
+    this.#productSrv.filterOneData(filter).subscribe({
       next: (products: Product[]) => {
         this.#state.update((s) => ({
           ...s,
@@ -194,5 +210,9 @@ export class ProductStore {
       error: () => {},
       complete: () => this.#state.update((s) => ({ ...s, isLoading: true })),
     });
+  }
+
+  getHistoryProduct() {
+    // this.#productSrv.
   }
 }

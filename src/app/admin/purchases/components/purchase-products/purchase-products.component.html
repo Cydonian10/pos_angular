@@ -1,0 +1,44 @@
+<div class="p-4 bg-base-300 rounded-md mt-3">
+  <div>
+    <span class="px-2 font-semibold text-xs">Nombre</span>
+    <div class="p-2 bg-base-100 rounded-md text-sm">
+      {{ product().name }}
+    </div>
+  </div>
+
+  <div class="flex gap-3 items-start mt-2">
+    <div class="w-1/2">
+      <span class="px-2 font-semibold text-xs">Precio de compra</span>
+      <div class="p-2 bg-base-100 rounded-md text-sm">
+        s/{{ product().purchasePrice }} soles
+      </div>
+    </div>
+    <div class="w-1/2">
+      <span class="px-2 font-semibold text-xs">Stock</span>
+      <div class="p-2 bg-base-100 rounded-md text-sm">
+        {{ product().stock }} {{ product().unitMeasurement }}
+      </div>
+    </div>
+  </div>
+  <!-- Cantidad -->
+  <form [formGroup]="form" class="join mt-3 flex items-start justify-end">
+    <input
+      type="number"
+      formControlName="purchasePrice"
+      class="input-sm input input-bordered join-item input-secondary w-full"
+      placeholder="Precio de compra"
+    />
+    <input
+      type="number"
+      formControlName="quantity"
+      class="input-sm input input-bordered join-item input-secondary w-full"
+      placeholder="Cantidad"
+    />
+    <button
+      (click)="handlePartialPurchaseDetail()"
+      class="btn btn-sm btn-secondary join-item"
+    >
+      +
+    </button>
+  </form>
+</div>

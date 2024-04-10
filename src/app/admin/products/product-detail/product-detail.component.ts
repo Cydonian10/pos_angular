@@ -12,6 +12,7 @@ import {
   CreateDiscountDto,
   Discount,
 } from '@/api/interfaces/discount.interface';
+import { ProductService } from '@/api/services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -26,6 +27,7 @@ export default class ProductDetailComponent {
   #productStore = inject(ProductStore);
   #lacation = inject(Location);
   #dialog = inject(Dialog);
+  #productSrv = inject(ProductService);
 
   state = this.#productStore.state;
 
@@ -33,6 +35,10 @@ export default class ProductDetailComponent {
 
   ngOnInit() {
     this.#productStore.getDiscounts(this.id);
+
+    this.#productSrv
+      .historyPrice(this.id)
+      .subscribe((resp) => console.log(resp));
   }
 
   openFormAddDiscount() {

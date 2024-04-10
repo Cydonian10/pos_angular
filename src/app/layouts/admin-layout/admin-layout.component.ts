@@ -43,7 +43,14 @@ export class AdminLayout {
 
   linkVentas = [
     { path: '/admin/cajas', name: 'Cajas Registradoras' },
-    { path: '/admin/users', name: 'Empleados' },
+    { path: '/admin/sales', name: 'Punto de venta' },
+    { path: '/admin/sales/report', name: 'Reportes' },
+  ];
+
+  proveedors = [
+    { path: '/admin/suppliers', name: 'Proveedores' },
+    { path: '/admin/suppliers/purchases', name: 'Compras' },
+    { path: '/admin/suppliers/report', name: 'Reporte' },
   ];
 
   constructor() {

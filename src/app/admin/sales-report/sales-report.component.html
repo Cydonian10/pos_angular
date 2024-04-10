@@ -1,0 +1,139 @@
+<div class="flex flex-col md:flex-row items-start gap-10">
+  <!-- Buscador -->
+  <div class="w-[400px] print:hidden">
+    <admin-title title="Fechas de busqueda" [showButton]="false"></admin-title>
+
+    <form [formGroup]="formDates" (ngSubmit)="handleSubmitFilterByDates()">
+      <div class="space-y-2">
+        <div>
+          <span class="font-bold text-info ml-4 text-xs">{{
+            this.formDates.controls.starDate.getRawValue()
+              | date: "MMMM EEEE d y"
+          }}</span>
+          <label class="input input-bordered flex items-center gap-2">
+            <span class="font-bold">Fecha Inicio: </span>
+            <input type="date" formControlName="starDate" class="grow" />
+          </label>
+        </div>
+        <div>
+          <span class="font-bold text-info ml-4 text-xs">{{
+            this.formDates.controls.endDate.getRawValue()
+              | date: "MMMM EEEE d y"
+          }}</span>
+          <label class="input input-bordered flex items-center gap-2">
+            <span class="font-bold">Fecha Fin: </span>
+            <input type="date" formControlName="endDate" class="grow" />
+          </label>
+        </div>
+
+        <span class="font-bold text-info ml-4 text-xs">{{ daysPassed() }}</span>
+        <div>
+          <button type="submit" class="btn btn-primary">Buscar</button>
+          <button
+            type="button"
+            (click)="handleDowloadExcel()"
+            class="btn btn-info"
+          >
+            Excel
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="space-y-2 mt-4">
+      <div>
+        <strong>{{ priceTotalSales() | currency: "soles" : "symbol" }}</strong>
+      </div>
+      @for (sale of salesByDate(); track sale.id) {
+        <div class="card bg-base-300">
+          <div class="card-body relative">
+            <div class="flex flex-col gap-3">
+              <span><strong>Vaucher</strong>: {{ sale.vaucherNumber }}</span>
+              <span><strong>Vendedor</strong>: {{ sale.user }}</span>
+              <span><strong>Cliente</strong>: {{ sale.customer }}</span>
+              <span
+                ><strong>Fecha</strong>
+                {{ sale.date | date: "MMMM, EEEE d y" }}</span
+              >
+              <span
+                ><strong>Precio Total</strong>
+                {{ sale.totalPrice | currency: "soles" : "symbol" }}</span
+              >
+              <button
+                class="btn btn-circle absolute top-2 right-2 bg-secondary"
+                (click)="handleSelectSale(sale)"
+              >
+                Ver
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Visualizacion -->
+  <div class="w-full">
+    <admin-title title="Detalle de la venta" [showButton]="false"></admin-title>
+    @if (selectSale()) {
+      <div class="overflow-x-auto print:-mt-12">
+        <table class="table table-zebra w-full">
+          <!-- head -->
+          <thead class="sticky top-0">
+            <tr>
+              <th></th>
+              <th class="sticky left-0">Nombre</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Descuento</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            @for (product of selectSale()?.productos; track $index) {
+              <tr>
+                <th>{{ $index + 1 }}</th>
+                <td class="sticky left-0">
+                  {{ product.name }}
+                </td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.unit }}</td>
+                <td>{{ product.descount | currency: "s/ " : "symbol" }}</td>
+                <td>{{ product.subTotal | currency: "s/ " : "symbol" }}</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot class="text-base-content">
+            <tr>
+              <td></td>
+              <td class="text-right" colspan="4">Descuento</td>
+              <td colspan="2">
+                {{ selectSale()?.totalDescount | currency: "s/ " : "symbol" }}
+              </td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td class="text-right" colspan="4">Total</td>
+              <td colspan="2">
+                {{ selectSale()?.totalPrice | currency: "s/ " : "symbol" }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    } @else {
+      <div class="card w-full">
+        <div class="card-body grid self-center">
+          <div class="flex flex-col items-center">
+            <i class="bx bx-selection text-error text-4xl"></i>
+            <span class="text-error font-bold text-xl">
+              Seleccione una venta
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

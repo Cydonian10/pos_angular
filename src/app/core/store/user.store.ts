@@ -151,7 +151,7 @@ export class UserStore {
             ...s,
             currentUser: userAuth,
           }));
-          this.#alertSrv.showAlertSuccess(`${userAuth.name} Iniciaste Sessión`);
+          // this.#alertSrv.showAlertSuccess(`${userAuth.name} Iniciaste Sessión`);
         },
         error: (error) => {
           if (error.error.errors) {
