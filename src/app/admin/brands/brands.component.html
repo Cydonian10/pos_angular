@@ -1,4 +1,16 @@
-<admin-title title="Marcas" (onClick)="openForm()"></admin-title>
+<admin-title title="Marcas" (onClick)="openForm()">
+  <label
+    class="input input-bordered flex items-center gap-2 input-primary input-sm"
+  >
+    <input
+      [formControl]="nameFilter"
+      type="text"
+      class="grow"
+      placeholder="Search"
+    />
+    <i class="bx bx-search-alt-2"></i>
+  </label>
+</admin-title>
 
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->
@@ -17,7 +29,7 @@
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (brand of brandState().brands; track $index) {
+      @for (brand of brandStore.filterBrands(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -61,8 +73,8 @@
 <!-- ******** Table *********************** -->
 <!-- *************************************** -->
 
-<app-pagination
+<!-- <app-pagination
   [totalRegistros]="this.brandState().totalRegistros"
   [(pagination)]="pagination"
   (onChangePage)="changePage()"
-/>
+/> -->

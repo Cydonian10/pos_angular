@@ -21,7 +21,7 @@
           formControlName="name"
           type="text"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered w-full input-primary"
         />
         @if (name.invalid && name.touched) {
           @for (error of name.errors | keyvalue; track $index) {
@@ -41,7 +41,7 @@
           formControlName="discountedPrice"
           type="number"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered w-full input-primary"
         />
         @if (discountedPrice.invalid && discountedPrice.touched) {
           @for (error of discountedPrice.errors | keyvalue; track $index) {
@@ -61,7 +61,7 @@
           formControlName="minimumDiscountQuantity"
           type="number"
           placeholder="Type here"
-          class="input input-bordered w-full"
+          class="input input-bordered w-full input-primary"
         />
         <div class="label">
           <span class="label-text-alt">Unidad de medida en {{ unidad }}</span>

@@ -3,12 +3,12 @@ import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormUnitComponent } from './components/form-unit/form-unit.component';
 import { SideComponent } from '@/components/side/side.component';
-import { SideService } from '@/core/services/side.service';
-import { UnitStore } from '@/core/store/unit.store';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
+import { UnitsStore } from '@/store/units.store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-units',
@@ -24,26 +24,27 @@ import { AdminTitleComponent } from '@/components/admin-title/admin-title.compon
   templateUrl: './units.component.html',
 })
 export default class UnitsComponent {
-  #sideSrv = inject(SideService);
-  #unitStore = inject(UnitStore);
+  readonly unitStore = inject(UnitsStore);
   #dialog = inject(Dialog);
 
-  public unitState = this.#unitStore.state;
-  public open = this.#sideSrv.open;
-  public filter = new FormControl<string>('');
+  public filter = new FormControl<string>(this.unitStore.filter());
 
-  ngOnInit() {
+  constructor() {
     this.filterName();
   }
 
   filterName() {
-    this.filter.valueChanges.pipe(debounceTime(1000)).subscribe((filter) => {
-      if (filter == '' || filter == null) {
-        this.#unitStore.getAll();
-        return;
-      }
-      this.#unitStore.filterName(filter);
-    });
+    this.filter.valueChanges
+      .pipe(debounceTime(1000), takeUntilDestroyed())
+      .subscribe((filter) => {
+        if (filter == '' || filter == null) {
+          this.unitStore.updateFilter('');
+          this.unitStore.loadAll();
+          return;
+        }
+        this.unitStore.updateFilter(filter);
+        this.unitStore.loadAll();
+      });
   }
 
   openForm(unit?: Unit) {
@@ -61,12 +62,12 @@ export default class UnitsComponent {
   }
 
   submitForm(dto: CreateUnitDto) {
-    this.#unitStore.create(dto);
+    this.unitStore.createUnit(dto);
   }
 
   submitUpdateForm(dto: Unit) {
     const { id, ...rest } = dto;
-    this.#unitStore.update(rest, id);
+    this.unitStore.updatedUnit(rest, id);
   }
 
   remove(unit: Unit) {
@@ -74,6 +75,6 @@ export default class UnitsComponent {
       `Desea eliminar la unidad de medida ${unit.name.toUpperCase()}`,
     );
 
-    value && this.#unitStore.remove(unit);
+    value && this.unitStore.delteUnit(unit.id);
   }
 }

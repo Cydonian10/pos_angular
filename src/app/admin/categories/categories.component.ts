@@ -2,13 +2,12 @@ import {
   Category,
   CreateCategoryDto,
 } from '@/api/interfaces/category.interface';
-import { CategoryStore } from '@/core/store/category.store';
 import { Dialog } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
+  OnInit,
   effect,
   inject,
   signal,
@@ -19,6 +18,7 @@ import { Pagination } from '@/api/interfaces/pagination.interface';
 import { PaginationComponent } from '@/components/pagination/pagination.component';
 import { debounceTime } from 'rxjs';
 import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
+import { CategoriesStore } from '@/store/categories.store';
 
 @Component({
   selector: 'app-categories',
@@ -33,21 +33,17 @@ import { AdminTitleComponent } from '@/components/admin-title/admin-title.compon
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class CategoriesComponent {
-  #categoryStore = inject(CategoryStore);
+export default class CategoriesComponent implements OnInit {
+  readonly categoryStore = inject(CategoriesStore);
   #dialog = inject(Dialog);
 
-  categoryState = this.#categoryStore.state;
+  filter = new FormControl(this.categoryStore.filter().name);
 
-  filter = new FormControl('');
-
-  pagination = signal<Pagination>({
-    page: 1,
-    quantityRecordsPerPage: 15,
-  });
+  pagination = signal<Pagination>(this.categoryStore.pagination());
 
   changePage() {
-    this.#categoryStore.getAll(this.pagination());
+    this.categoryStore.updatePagination(this.pagination());
+    this.categoryStore.getAll();
   }
 
   ngOnInit() {
@@ -57,10 +53,10 @@ export default class CategoriesComponent {
   filterName() {
     this.filter.valueChanges.pipe(debounceTime(1000)).subscribe((filter) => {
       if (filter == '' || filter == null) {
-        this.#categoryStore.getAll(this.pagination());
+        this.categoryStore.getAll();
         return;
       }
-      this.#categoryStore.filterName(filter);
+      this.categoryStore.filterName({ name: filter });
     });
   }
 
@@ -71,9 +67,7 @@ export default class CategoriesComponent {
         data: category,
       })
       .closed.subscribe((resp: any) => {
-        if (resp === false) {
-          return;
-        }
+        if (resp === false) return;
         if (resp.id) {
           this.submitUpdate(resp);
           return;
@@ -83,17 +77,19 @@ export default class CategoriesComponent {
   }
 
   submitCreate(dto: CreateCategoryDto) {
-    this.#categoryStore.create(dto);
+    this.categoryStore.create(dto);
   }
 
   submitUpdate(dto: Category) {
     const { id, ...rest } = dto;
-    this.#categoryStore.update(rest, id);
+    this.categoryStore.update(rest, id);
   }
 
   remove(category: Category) {
     const value = window.confirm(
       `Desea eliminar la categoria ${category.name.toUpperCase()} `,
     );
+
+    value && this.categoryStore.delete(category);
   }
 }

@@ -1,3 +1,11 @@
+@if (categoryStore.isLoading()) {
+  <div
+    class="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/50 z-[100]"
+  >
+    <span class="loading loading-infinity w-[100px] text-info"></span>
+  </div>
+}
+
 <admin-title title="Categorias" (onClick)="openForm()">
   <label class="input input-bordered flex items-center gap-2 input-primary">
     <input
@@ -26,7 +34,7 @@
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (category of categoryState().categories; track $index) {
+      @for (category of categoryStore.categories(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -68,7 +76,7 @@
 <!-- *************************************** -->
 
 <app-pagination
-  [totalRegistros]="this.categoryState().totalRegistros"
+  [totalRegistros]="categoryStore.totalRecords()"
   [(pagination)]="pagination"
   (onChangePage)="changePage()"
 />

@@ -39,6 +39,10 @@ export class CategoriaService {
     return this.#http.put<Category>(`${this.#url}/categories/${id}`, dto);
   }
 
+  delete(id: number) {
+    return this.#http.delete<{ id: number }>(`${this.#url}/categories/${id}`);
+  }
+
   filterName(name: string) {
     const params = new HttpParams().set('name', name);
 

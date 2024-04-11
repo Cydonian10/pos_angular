@@ -24,16 +24,29 @@ export class PaginationComponent {
 
   onChangePage = output();
 
+  // calculamos el total de paginas
   totalPage = computed(() =>
     Math.ceil(this.totalRegistros() / this.pagination().quantityRecordsPerPage),
   );
+
+  // esto total de paginas lo volvemos un array
   totalPageArray = computed(() => new Array(this.totalPage()));
 
-  selectQuantityRegister = new FormControl<number>(15);
+  selectQuantityRegister = new FormControl<number>(0);
 
   ngOnInit() {
+    // seteamos el valor del cantidad de registros por pagina
+    this.selectQuantityRegister.setValue(
+      this.pagination().quantityRecordsPerPage,
+    );
+
+    // emitimos el valor para camibar de pagina
     this.selectQuantityRegister.valueChanges.subscribe((resp) => {
-      this.pagination.update((p) => ({ ...p, quantityRecordsPerPage: resp! }));
+      this.pagination.update((p) => ({
+        page: p.page === this.totalPage() ? p.page - 1 : p.page,
+        quantityRecordsPerPage: +resp!,
+      }));
+
       this.onChangePage.emit();
     });
   }

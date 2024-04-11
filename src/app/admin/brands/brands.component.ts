@@ -1,19 +1,13 @@
-import { Pagination } from '@/api/interfaces/pagination.interface';
 import { PaginationComponent } from '@/components/pagination/pagination.component';
-import { CategoryStore } from '@/core/store/category.store';
 import { Dialog } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FormBrandComponent } from './components/form-brand/form-brand.component';
 import { Brand } from '@/api/interfaces/brand.interface';
-import { BrandStore } from '@/core/store/brand.store.';
 import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
+import { BrandsStore } from '@/store/brands.store';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-brands',
@@ -29,18 +23,23 @@ import { AdminTitleComponent } from '@/components/admin-title/admin-title.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class BrandsComponent {
-  #brandStore = inject(BrandStore);
+  readonly brandStore = inject(BrandsStore);
   #dialog = inject(Dialog);
 
-  public brandState = this.#brandStore.state;
+  nameFilter = new FormControl(this.brandStore.filter().name);
 
-  pagination = signal<Pagination>({
-    page: 1,
-    quantityRecordsPerPage: 15,
-  });
+  constructor() {
+    this.filterName();
+  }
 
-  changePage() {
-    this.#brandStore.getAll(this.pagination());
+  filterName() {
+    this.nameFilter.valueChanges.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value == '' || value == null) {
+        this.brandStore.updateFilter({ name: '' });
+        return;
+      }
+      this.brandStore.updateFilter({ name: value });
+    });
   }
 
   openForm(brand?: Brand) {
@@ -50,24 +49,17 @@ export default class BrandsComponent {
         data: brand,
       })
       .closed.subscribe((resp: any) => {
-        if (resp === false) {
-          return;
-        }
-
-        if (resp.id) {
-          console.log(resp);
-        }
-
+        if (!resp) return;
         resp.id ? this.submitUpdate(resp) : this.submitCreate(resp);
       });
   }
 
   submitCreate(dto: FormData) {
-    this.#brandStore.create(dto);
+    this.brandStore.create(dto);
   }
 
   submitUpdate(dto: { formData: FormData; id: number }) {
-    this.#brandStore.update(dto.formData, dto.id);
+    this.brandStore.update(dto.formData, dto.id);
   }
 
   remove(brand: Brand) {

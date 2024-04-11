@@ -29,6 +29,10 @@ export class ProductService {
     });
   }
 
+  getOne(id: number) {
+    return this.#http.get<Product>(`${this.#url}/products/${id}`);
+  }
+
   create(dto: FormData) {
     return this.#http.post<Product>(`${this.#url}/products`, dto);
   }

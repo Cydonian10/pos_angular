@@ -1,3 +1,11 @@
+@if (unitStore.isLoading()) {
+  <div
+    class="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/50 z-[100]"
+  >
+    <span class="loading loading-infinity w-[100px] text-info"></span>
+  </div>
+}
+
 <admin-title title="Unidades de Medida" (onClick)="openForm()">
   <label
     class="input input-bordered flex items-center gap-2 input-primary input-sm"
@@ -28,7 +36,7 @@
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (unit of unitState().units; track $index) {
+      @for (unit of unitStore.units(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -41,7 +49,6 @@
             {{ unit.name }}
           </td>
           <td>{{ unit.symbol }}</td>
-          <!-- Acciones -->
           <td class="flex items-center gap-2">
             <button
               (click)="openForm(unit)"

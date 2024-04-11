@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (product of productState().products; track $index) {
+      @for (product of productStore.products(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -70,7 +70,7 @@
             </button>
 
             <button
-              (click)="detalle(product)"
+              [routerLink]="['detail', product.id]"
               class="btn btn-ghost text-info rounded-full tooltip"
               data-tip="Detalle"
             >
@@ -90,7 +90,7 @@
 <!-- *************************************** -->
 
 <app-pagination
-  [totalRegistros]="this.productState().totalRegistros"
+  [totalRegistros]="productStore.totalRecords()"
   [(pagination)]="pagination"
   (onChangePage)="changePage()"
 />

@@ -6,6 +6,7 @@ import {
   Component,
   Input,
   inject,
+  signal,
 } from '@angular/core';
 import { AddDiscountComponent } from '../components/add-discount/add-discount.component';
 import {
@@ -13,6 +14,7 @@ import {
   Discount,
 } from '@/api/interfaces/discount.interface';
 import { ProductService } from '@/api/services/product.service';
+import { Product } from '@/api/interfaces/product.interface';
 
 @Component({
   selector: 'app-product-detail',
@@ -24,28 +26,38 @@ import { ProductService } from '@/api/services/product.service';
 })
 export default class ProductDetailComponent {
   @Input() id: number = 0;
-  #productStore = inject(ProductStore);
   #lacation = inject(Location);
   #dialog = inject(Dialog);
   #productSrv = inject(ProductService);
 
-  state = this.#productStore.state;
+  product = signal<Product>({} as Product);
+  discounts = signal<Discount[]>([]);
 
   constructor() {}
 
   ngOnInit() {
-    this.#productStore.getDiscounts(this.id);
+    //this.#productStore.getDiscounts(this.id);
 
     this.#productSrv
       .historyPrice(this.id)
       .subscribe((resp) => console.log(resp));
+
+    this.#productSrv.getOne(this.id).subscribe((product: Product) => {
+      this.product.set(product);
+    });
+
+    this.#productSrv
+      .getDiscounts(this.id)
+      .subscribe((discounts: Discount[]) => {
+        this.discounts.set(discounts);
+      });
   }
 
   openFormAddDiscount() {
     this.#dialog
       .open(AddDiscountComponent, {
         height: '100%',
-        data: this.state().currentProduct?.unitMeasurement,
+        data: this.product().unitMeasurement,
         disableClose: true,
       })
       .closed.subscribe((resp: any) => {
@@ -54,10 +66,15 @@ export default class ProductDetailComponent {
       });
   }
 
-  submitAddDiscount(discount: CreateDiscountDto) {
-    const id = this.state().currentProduct?.id;
-    this.#productStore.addDiscount(discount, id!);
-    // console.log(discount,);
+  submitAddDiscount(discountDto: CreateDiscountDto) {
+    this.#productSrv
+      .addDiscount([discountDto], this.product().id)
+      .subscribe(() => {
+        this.discounts.update((discounts) => [
+          { ...discountDto, id: 1 },
+          ...discounts,
+        ]);
+      });
   }
 
   backPage() {
@@ -69,6 +86,10 @@ export default class ProductDetailComponent {
       `Desea eliminar ${discount.name.toUpperCase()}`,
     );
 
-    this.#productStore.removeDiscount(discount);
+    this.#productSrv.removeDiscount(discount.id).subscribe(() => {
+      this.discounts.update((discounts) =>
+        discounts.filter((d) => d.id !== discount.id),
+      );
+    });
   }
 }

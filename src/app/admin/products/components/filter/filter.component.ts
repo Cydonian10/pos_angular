@@ -7,6 +7,7 @@ import {
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FilterProduct } from '@/api/interfaces/product.interface';
+import { ProductsStore } from '@/store/products.store';
 
 @Component({
   selector: 'app-filter',
@@ -17,16 +18,20 @@ import { FilterProduct } from '@/api/interfaces/product.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
+  readonly productStore = inject(ProductsStore);
   #fb = inject(FormBuilder);
   isOpen = false;
   onFilterData = output<FilterProduct>();
   onDeleteFilter = output();
 
   form = this.#fb.group({
-    name: new FormControl<string | null>(null, {}),
-    price: new FormControl<number | null>(null, {}),
-    stock: new FormControl<number | null>(null, {}),
-    barCode: new FormControl<number | null>(null, {}),
+    name: new FormControl<string | null>(this.productStore.filter().name, {}),
+    price: new FormControl<number | null>(this.productStore.filter().price, {}),
+    stock: new FormControl<number | null>(this.productStore.filter().stock, {}),
+    barCode: new FormControl<number | null>(
+      this.productStore.filter().barCode,
+      {},
+    ),
   });
 
   handleFilterData() {
