@@ -2,6 +2,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import {
   ChangeDetectionStrategy,
   Component,
+  OnInit,
   inject,
   signal,
 } from '@angular/core';
@@ -32,7 +33,7 @@ import { ProductsStore } from '@/store/products.store';
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ProductsComponent {
+export default class ProductsComponent implements OnInit {
   readonly productStore = inject(ProductsStore);
   readonly unitStore = inject(UnitsStore);
   readonly categoryStore = inject(CategoriesStore);
@@ -45,6 +46,10 @@ export default class ProductsComponent {
   });
 
   changePage() {
+    this.productStore.getAll(this.pagination());
+  }
+
+  ngOnInit(): void {
     this.productStore.getAll(this.pagination());
   }
 

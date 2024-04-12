@@ -1,7 +1,7 @@
 import { CashRegister } from '@/api/interfaces/cash-register.interface';
 import { UserAuth } from '@/api/interfaces/user.interface';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +12,7 @@ import {
 @Component({
   selector: 'select-cash-register',
   standalone: true,
-  imports: [OverlayModule, JsonPipe],
+  imports: [OverlayModule, JsonPipe, NgClass],
   templateUrl: './select-cash-register.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

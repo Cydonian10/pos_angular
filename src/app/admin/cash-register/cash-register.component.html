@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (cashRe of cashRegisterState().cashRegisters; track $index) {
+      @for (cashRe of cashRegisterStore.cashRegisters(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td

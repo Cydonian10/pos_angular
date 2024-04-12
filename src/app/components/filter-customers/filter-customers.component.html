@@ -1,0 +1,37 @@
+<p class="text-base-content font-bold mb-2">Buscador de producto</p>
+<form [formGroup]="form" class="join w-full mb-4" (ngSubmit)="submitForm()">
+  <!-- Formulario Reactivo -->
+  <div class="w-full">
+    @switch (filter.getRawValue()) {
+      @case ("name") {
+        <input
+          formControlName="name"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Buscar por nombre"
+          type="text"
+        />
+      }
+      @case ("dni") {
+        <input
+          formControlName="dni"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Burcar por DNI"
+          type="text"
+        />
+      }
+    }
+  </div>
+  <select
+    [formControl]="filter"
+    class="select select-bordered join-item select-primary select-sm"
+  >
+    <option disabled selected>Filter</option>
+    <option [value]="'dni'">DNI</option>
+    <option [value]="'name'">Nombre</option>
+  </select>
+  <div class="indicator">
+    <button type="submit" class="btn btn-primary join-item btn-sm">
+      Buscar
+    </button>
+  </div>
+</form>

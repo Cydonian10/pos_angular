@@ -43,7 +43,7 @@ export class PaginationComponent {
     // emitimos el valor para camibar de pagina
     this.selectQuantityRegister.valueChanges.subscribe((resp) => {
       this.pagination.update((p) => ({
-        page: p.page === this.totalPage() ? p.page - 1 : p.page,
+        page: p.page === this.totalPage() && p.page !== 1 ? p.page - 1 : p.page,
         quantityRecordsPerPage: +resp!,
       }));
 

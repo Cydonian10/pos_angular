@@ -1,6 +1,12 @@
 <div class="card md:w-[600px] bg-base-100 shadow-xl">
   <div class="card-body">
     <h2 class="card-title">Clientes</h2>
+
+    <app-filter-customers
+      [filterCustomer]="customerStore.filter()"
+      (onFilterCustomer)="filterCustomer($event)"
+    />
+
     <!-- *************************************** -->
     <!-- ******** Table *********************** -->
     <!-- *************************************** -->
@@ -18,7 +24,7 @@
         </thead>
         <tbody>
           <!-- row 1 -->
-          @for (customer of customers; track $index) {
+          @for (customer of customerStore.filterCustomers(); track $index) {
             <tr>
               <th>{{ $index + 1 }}</th>
               <td

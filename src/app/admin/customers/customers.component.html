@@ -1,4 +1,9 @@
-<admin-title title="Clientes" (onClick)="openForm()"> </admin-title>
+<admin-title title="Clientes" (onClick)="openForm()">
+  <app-filter-customers
+    [filterCustomer]="customerStore.filter()"
+    (onFilterCustomer)="filterCustomer($event)"
+  />
+</admin-title>
 
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->
@@ -14,11 +19,12 @@
         <th>Telefono</th>
         <th>Direccion</th>
         <th>Puntos</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <!-- row 1 -->
-      @for (customer of customerState().customers; track $index) {
+      @for (customer of customerStore.filterCustomers(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
           <td
@@ -61,3 +67,8 @@
 <!-- *************************************** -->
 <!-- ******** Table *********************** -->
 <!-- *************************************** -->
+<app-pagination
+  [totalRegistros]="customerStore.totalRecords()"
+  [(pagination)]="pagination"
+  (onChangePage)="changePage()"
+/>

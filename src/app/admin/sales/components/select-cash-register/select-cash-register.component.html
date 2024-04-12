@@ -2,7 +2,7 @@
   (click)="isOpen = !isOpen"
   type="button"
   cdkOverlayOrigin
-  class="btn-sm md:btn-md btn btn-outline btn-primary px-10 md:px-10"
+  class="btn-sm btn btn-outline btn-primary px-10 md:px-10"
   #trigger="cdkOverlayOrigin"
 >
   Manejar Caja
@@ -21,7 +21,12 @@
         @if (cashRegister.userId) {
           @if (cashRegister.userId === userAuth().id) {
             <div class="flex items-center gap-3">
-              <p class="w-full">{{ cashRegister.name }}</p>
+              <p
+                [ngClass]="{ 'text-success': cashRegister.open }"
+                class="w-full"
+              >
+                {{ cashRegister.name }}
+              </p>
               <button
                 (click)="onCloseCashRegister.emit(cashRegister)"
                 class="btn btn-sm btn-warning w-[130px]"
@@ -31,13 +36,20 @@
             </div>
           } @else {
             <div class="flex items-center gap-3">
-              <p class="w-full">{{ cashRegister.name }}</p>
+              <p
+                [ngClass]="{ 'text-success': cashRegister.open }"
+                class="w-full"
+              >
+                {{ cashRegister.name }}
+              </p>
               <div class="badge badge-accent">Caja Ocupada</div>
             </div>
           }
         } @else {
           <div class="flex items-center gap-3">
-            <p class="w-full">{{ cashRegister.name }}</p>
+            <p [ngClass]="{ 'text-success': cashRegister.open }" class="w-full">
+              {{ cashRegister.name }}
+            </p>
             <button
               (click)="onSelectCashRegister.emit(cashRegister)"
               class="btn btn-primary btn-sm w-[130px]"

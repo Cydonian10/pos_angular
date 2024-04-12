@@ -20,3 +20,8 @@ export interface UpdateCustomerDto {
   DNI: string;
   address: string | null;
 }
+
+export interface FilterCustomer {
+  name: string | null;
+  dni: string | null;
+}

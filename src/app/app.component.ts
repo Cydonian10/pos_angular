@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TokenService } from './core/services/token.service';
 import { UserStore } from './core/store/user.store';
-import { CashRegisterStore } from './core/store/cash-register.store';
+import { CashRegistersStore } from './store/cash-registers.store';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +12,12 @@ import { CashRegisterStore } from './core/store/cash-register.store';
 })
 export class AppComponent {
   #userStore = inject(UserStore);
-  #cashRegisterStore = inject(CashRegisterStore);
+  readonly cashRegisterStore = inject(CashRegistersStore);
 
   constructor() {
     const theme = localStorage.getItem('theme');
     document.documentElement.setAttribute('data-theme', theme!);
     this.#userStore.profile();
-    this.#cashRegisterStore.setCurrentCashRegister();
+    this.cashRegisterStore.loadCurrentCashRegister();
   }
 }

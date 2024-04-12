@@ -1,35 +1,41 @@
-<p class="text-base-content font-bold mb-2">Buscador de producto</p>
 <div class="join">
-  <div>
-    <div>
-      @switch (filter.getRawValue()) {
-        @case ("barCode") {
-          <input
-            [formControl]="value"
-            class="input-sm input input-bordered join-item select-primary"
-            placeholder="Buscar por bar code"
-            type="number"
-          />
-        }
-        @case ("price") {
-          <input
-            [formControl]="value"
-            class="input-sm input input-bordered join-item select-primary"
-            placeholder="Burcar por precio"
-            type="number"
-          />
-        }
-        @case ("name") {
-          <input
-            [formControl]="value"
-            type="text"
-            class="input-sm input input-bordered join-item select-primary"
-            placeholder="Buscar por nombre"
-          />
-        }
+  <!-- Formulario Reactivo -->
+  <form [formGroup]="form" class="w-full">
+    @switch (filter.getRawValue()) {
+      @case ("barCode") {
+        <input
+          formControlName="barCode"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Buscar por bar code"
+          type="number"
+        />
       }
-    </div>
-  </div>
+      @case ("price") {
+        <input
+          formControlName="price"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Burcar por precio"
+          type="number"
+        />
+      }
+      @case ("name") {
+        <input
+          formControlName="name"
+          type="text"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Buscar por nombre"
+        />
+      }
+      @case ("stock") {
+        <input
+          formControlName="stock"
+          type="number"
+          class="input-sm input input-bordered join-item select-primary w-full"
+          placeholder="Buscar por nombre"
+        />
+      }
+    }
+  </form>
   <select
     [formControl]="filter"
     class="select select-bordered join-item select-primary select-sm"

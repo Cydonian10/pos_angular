@@ -1,9 +1,12 @@
 @if (unitStore.isLoading()) {
   <div
-    class="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/50 z-[100]"
+    class="transition-all fixed inset-0 w-screen h-screen flex items-center justify-center bg-black/50 z-[100]"
   >
     <span class="loading loading-infinity w-[100px] text-info"></span>
   </div>
+  <!-- <progress
+    class="progress w-full fixed top-0 left-0 right-0 progress-primary"
+  ></progress> -->
 }
 
 <admin-title title="Unidades de Medida" (onClick)="openForm()">

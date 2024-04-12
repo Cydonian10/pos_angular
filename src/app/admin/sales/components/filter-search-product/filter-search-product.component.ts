@@ -1,3 +1,5 @@
+import { FilterProduct } from '@/api/interfaces/product.interface';
+import { ProductsStore } from '@/store/products.store';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,13 +8,14 @@ import {
   output,
 } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, repeat, take } from 'rxjs';
+
+type TypeFilter = 'name' | 'price' | 'stock' | 'barCode';
 
 @Component({
   selector: 'filter-search-product',
@@ -23,35 +26,54 @@ import { debounceTime, filter } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterSearchProductComponent implements OnInit {
-  value = new FormControl<any>(null);
-  filter = new FormControl<any>('name');
+  readonly fb = inject(NonNullableFormBuilder);
+  readonly productStore = inject(ProductsStore);
 
-  onSubmitFilterProduct = output<{
-    value: any;
-    filter: any;
-  }>();
+  filter = new FormControl<TypeFilter>('name', {
+    nonNullable: true,
+  });
+
+  form = this.fb.group({
+    name: new FormControl<string | null>(this.productStore.filter().name, {}),
+    price: new FormControl<number | null>(this.productStore.filter().price, {}),
+    stock: new FormControl<number | null>(this.productStore.filter().stock, {}),
+    barCode: new FormControl<number | null>(
+      this.productStore.filter().barCode,
+      {},
+    ),
+  });
+
+  onSubmitFilterProduct = output<FilterProduct>();
 
   onGetAllProducts = output<void>();
 
   ngOnInit(): void {
-    this.value.valueChanges
-      .pipe(
-        debounceTime(1000),
-        filter((value) => {
-          return value;
-        }),
-      )
-      .subscribe((resp: any) => {
-        this.onSubmitFilterProduct.emit({
-          value: resp,
-          filter: this.filter.getRawValue(),
+    this.form.valueChanges
+      .pipe(debounceTime(1000), distinctUntilChanged(), take(1), repeat())
+      .subscribe((filter: any) => {
+        this.onSubmitFilterProduct.emit(filter);
+        this.form.reset({
+          barCode: null,
+          name: null,
+          price: null,
+          stock: null,
         });
-        this.value.reset();
+        this.productStore.updatedFilter({
+          barCode: null,
+          name: null,
+          price: null,
+          stock: null,
+        });
       });
   }
 
   clear() {
-    this.value.reset();
     this.onGetAllProducts.emit();
+    this.productStore.updatedFilter({
+      barCode: null,
+      name: null,
+      price: null,
+      stock: null,
+    });
   }
 }

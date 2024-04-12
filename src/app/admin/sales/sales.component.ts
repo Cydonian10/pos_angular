@@ -1,5 +1,3 @@
-import { CashRegisterStore } from '@/core/store/cash-register.store';
-import { ProductStore } from '@/core/store/product.store';
 import {
   CurrencyPipe,
   JsonPipe,
@@ -21,10 +19,15 @@ import { SaleProductsComponent } from './components/sale-products/sale-products.
 import { PostItem } from '@/core/interfaces/post.interface';
 import { PosService } from '@/core/services/pos.service';
 import { PosItemsTableComponent } from './components/pos-items-table/pos-items-table.component';
-import { CustomerStore } from '@/core/store/customer.store';
 import { Dialog } from '@angular/cdk/dialog';
 import { SelectCustomerComponent } from './components/select-customer/select-customer.component';
 import { Customer } from '@/api/interfaces/customer.interface';
+import { FilterProduct } from '@/api/interfaces/product.interface';
+import { ProductsStore } from '@/store/products.store';
+import { CustomersStore } from '@/store/customers.store';
+import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
+import { CardHeaderComponent } from '@/components/card-header/card-header.component';
+import { CashRegistersStore } from '@/store/cash-registers.store';
 
 @Component({
   selector: 'app-sales',
@@ -38,37 +41,37 @@ import { Customer } from '@/api/interfaces/customer.interface';
     SaleProductsComponent,
     NgClass,
     PosItemsTableComponent,
+    AdminTitleComponent,
+    CardHeaderComponent,
   ],
   templateUrl: './sales.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SalesComponent implements OnInit {
-  #productStore = inject(ProductStore);
-  #cashRegisterStore = inject(CashRegisterStore);
+  readonly productStore = inject(ProductsStore);
+  readonly customerStore = inject(CustomersStore);
+  readonly cashRegisterStore = inject(CashRegistersStore);
+
   #userStore = inject(UserStore);
-  #customerStore = inject(CustomerStore);
   #dialog = inject(Dialog);
   posSrv = inject(PosService);
 
   customerSelected = signal<Customer | undefined>(undefined);
-  cashRegisterState = this.#cashRegisterStore.state;
   userState = this.#userStore.state;
-  productState = this.#productStore.state;
-  customerState = this.#customerStore.state;
 
   ngOnInit(): void {
-    this.#cashRegisterStore.getAll();
+    this.productStore.getAll({ page: 1, quantityRecordsPerPage: 0 });
+    this.cashRegisterStore.getAll();
   }
 
   selectCustomer() {
     this.#dialog
       .open(SelectCustomerComponent, {
-        data: this.customerState().customers,
+        data: this.customerStore.filterCustomers(),
       })
       .closed.subscribe((resp: any) => {
         this.customerSelected.set(resp);
-        console.log(this.customerSelected());
       });
   }
 
@@ -86,19 +89,19 @@ export default class SalesComponent implements OnInit {
   }
 
   handleSelectCashRegister(cashRegister: CashRegister) {
-    this.#cashRegisterStore.selectedCashRegister(cashRegister);
+    this.cashRegisterStore.selectCashRegister(cashRegister);
   }
 
   handleCloseCashRegister(cashRegister: CashRegister) {
-    this.#cashRegisterStore.closeCashRegister(cashRegister);
+    this.cashRegisterStore.closeCashRegister(cashRegister);
   }
 
-  handleFilterProducts(productFilter: any) {
-    this.#productStore.filterOneData(productFilter);
+  filterProducts(filterDto: FilterProduct) {
+    this.productStore.filterProduct(filterDto);
   }
 
-  handleGetProducts() {
-    this.#productStore.getAll({ page: 1, quantityRecordsPerPage: 15 });
+  getProducts() {
+    this.productStore.clearProducts();
   }
 
   handleAddPostItem(postItem: PostItem) {

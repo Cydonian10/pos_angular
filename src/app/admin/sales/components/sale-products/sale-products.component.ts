@@ -27,7 +27,8 @@ export class SaleProductsComponent {
 
   onAddPostItem = output<PostItem>();
 
-  handleAddPostItem() {
+  handleAddPostItem(event: Event) {
+    event.preventDefault();
     if (this.quantity.invalid) {
       return;
     }
@@ -38,5 +39,7 @@ export class SaleProductsComponent {
       quantity: this.quantity.getRawValue()!,
       subTotal: 0,
     });
+
+    this.quantity.reset(null);
   }
 }

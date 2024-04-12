@@ -1,48 +1,79 @@
-<div
-  class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 print:hidden"
->
-  <div class="flex flex-col md:flex-row gap-4">
-    <filter-search-product
-      (onSubmitFilterProduct)="handleFilterProducts($event)"
-      (onGetAllProducts)="handleGetProducts()"
-    >
-    </filter-search-product>
-    <button class="btn btn-sm btn-primary mt-8" (click)="selectCustomer()">
-      Seleccionar Usuario
-    </button>
-  </div>
-  <select-cash-register
-    [cashRegisters]="cashRegisterState().cashRegisters"
-    [userAuth]="userState().currentUser!"
-    (onCloseCashRegister)="handleCloseCashRegister($event)"
-    (onSelectCashRegister)="handleSelectCashRegister($event)"
-  ></select-cash-register>
-</div>
+<admin-title title="Punto de venta" [showButton]="false" />
 
-<div class="flex flex-col md:flex-row gap-4 items-start mt-5">
-  <!-- products -->
-  <div class="space-y-2 min-w-[300px] max-w-[450px] w-full print:hidden">
-    <h4>Producto(s)</h4>
-    @for (product of productState().products; track $index) {
-      <!-- Car -->
-      <sale-product
-        [product]="product"
-        (onAddPostItem)="handleAddPostItem($event)"
-      />
-    } @empty {
-      <p class="text-error font-bold p-1">No hay productos</p>
-    }
-  </div>
+<div class="flex flex-col sm:flex-row gap-4 items-start">
+  <div class="min-w-[300px] max-w-[450px] w-full print:hidden">
+    <app-card-header title="Seleccionar Caja">
+      @if (cashRegisterStore.currentCashRegister()) {
+        <div class="py-1 px-3 bg-base-100 rounded-md mb-3">
+          {{ cashRegisterStore.currentCashRegister()?.name }}
+        </div>
+      } @else {
+        <div class="py-1 px-3 bg-base-100 rounded-md text-info mb-3">
+          Selecione una caja
+        </div>
+      }
+      <select-cash-register
+        [cashRegisters]="cashRegisterStore.cashRegisters()"
+        [userAuth]="userState().currentUser!"
+        (onCloseCashRegister)="handleCloseCashRegister($event)"
+        (onSelectCashRegister)="handleSelectCashRegister($event)"
+      ></select-cash-register>
+    </app-card-header>
 
+    <app-card-header title="Seleccionar Usuario">
+      <div class="flex gap-3 items-start">
+        <div class="w-1/2">
+          <span class="px-2 font-semibold text-xs">Nombre</span>
+          <div class="p-2 bg-base-100 rounded-md text-sm">
+            {{ customerSelected()?.name ?? "nombre" }}
+          </div>
+        </div>
+        <div class="w-1/2">
+          <span class="px-2 font-semibold text-xs">Puntos</span>
+          <div class="p-2 bg-base-100 rounded-md text-sm">
+            {{ customerSelected()?.points ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-primary mt-3" (click)="selectCustomer()">
+        Seleccionar Usuario
+      </button>
+    </app-card-header>
+
+    <app-card-header title="Buscar Productos">
+      <filter-search-product
+        (onSubmitFilterProduct)="filterProducts($event)"
+        (onGetAllProducts)="getProducts()"
+      >
+      </filter-search-product>
+
+      <!-- products -->
+      <div class="flex flex-col gap-3 print:hidden mt-4">
+        @for (product of productStore.products(); track $index) {
+          <!-- Car -->
+          <sale-product
+            [product]="product"
+            (onAddPostItem)="handleAddPostItem($event)"
+          />
+        } @empty {
+          <div class="p-4 bg-base-300 rounded-md">
+            <span class="font-semibold text-info block text-center"
+              >Buscar producto</span
+            >
+          </div>
+        }
+      </div>
+    </app-card-header>
+  </div>
   <!-- items venta -->
-  <div class="w-full">
+  <div class="w-full print:-mt-16">
     <pos-items-table
       [posItems]="posSrv.posItems()"
       [igv]="posSrv.igv()"
       [totalDescuento]="posSrv.totalDescuento()"
       [totalPrice]="posSrv.totalPrice()"
       [subTotal]="posSrv.subTotal()"
-      [cashRegisterId]="cashRegisterState().selectCashRegister?.id"
+      [cashRegisterId]="cashRegisterStore.currentCashRegister()?.id"
       [customer]="customerSelected()"
       (onClearProductItems)="clearPosItems()"
       (onRemoveProduct)="removePosItem($event)"

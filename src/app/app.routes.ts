@@ -11,6 +11,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: 'dashboard',
+        loadComponent: () => import('@/admin/dashboard/dashboard.component'),
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('@/admin/profile/profile.component'),
+      },
+      {
         path: 'units',
         loadComponent: () => import('@/admin/units/units.component'),
       },

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import {
@@ -6,6 +6,7 @@ import {
   Customer,
   UpdateCustomerDto,
 } from '../interfaces/customer.interface';
+import { Pagination } from '../interfaces/pagination.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,19 @@ export class CustomerService {
 
   #url = environment.urlapi;
 
-  getAll() {
-    return this.#http.get<Customer[]>(`${this.#url}/customers`);
+  // getAll() {
+  //   return this.#http.get<Customer[]>(`${this.#url}/customers`);
+  // }
+
+  getAll(pagination: Pagination) {
+    const params = new HttpParams()
+      .set('quantityRecordsPerPage', pagination.quantityRecordsPerPage)
+      .set('page', pagination.page);
+
+    return this.#http.get<Customer[]>(`${this.#url}/customers`, {
+      observe: 'response',
+      params,
+    });
   }
 
   create(dto: CreateCustomerDto) {

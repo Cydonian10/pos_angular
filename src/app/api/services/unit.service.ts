@@ -13,27 +13,23 @@ export class UnitService {
   #url = environment.urlapi;
 
   getUnits() {
-    return this.#http.get<Unit[]>(`${this.#url}/units`).pipe(delay(500));
+    return this.#http.get<Unit[]>(`${this.#url}/units`).pipe();
   }
 
   getByName(name: string) {
-    return this.#http
-      .get<Unit>(`${this.#url}/units/${name}/find`)
-      .pipe(delay(500));
+    return this.#http.get<Unit>(`${this.#url}/units/${name}/find`).pipe();
   }
 
   create(dto: CreateUnitDto) {
-    return this.#http.post<Unit>(`${this.#url}/units`, dto).pipe(delay(500));
+    return this.#http.post<Unit>(`${this.#url}/units`, dto).pipe();
   }
 
   update(dto: CreateUnitDto, id: number) {
-    return this.#http
-      .put<Unit>(`${this.#url}/units/${id}`, dto)
-      .pipe(delay(500));
+    return this.#http.put<Unit>(`${this.#url}/units/${id}`, dto).pipe();
   }
 
   remove(id: number) {
-    return this.#http.delete(`${this.#url}/units/${10000}`).pipe(delay(500));
+    return this.#http.delete(`${this.#url}/units/${id}`).pipe();
   }
 
   filterName(name: string) {
@@ -41,6 +37,6 @@ export class UnitService {
 
     return this.#http
       .get<Unit[]>(`${this.#url}/units/filter`, { params })
-      .pipe(delay(500));
+      .pipe();
   }
 }

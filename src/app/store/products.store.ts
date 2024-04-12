@@ -127,12 +127,16 @@ export const ProductsStore = signalStore(
       updatePagination(pagination: Pagination) {
         patchState(store, { pagination: pagination });
       },
+
+      clearProducts() {
+        patchState(store, { products: [] });
+      },
     }),
   ),
 
-  withHooks({
-    async onInit(store) {
-      await store.getAll(store.pagination());
-    },
-  }),
+  // withHooks({
+  //   async onInit(store) {
+  //     await store.getAll(store.pagination());
+  //   },
+  // }),
 );

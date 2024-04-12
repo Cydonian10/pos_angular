@@ -45,7 +45,7 @@
             class="mt-3 z-[1] p-2 text-base-content shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-52"
           >
             <li class="">
-              <a class="justify-between">
+              <a class="justify-between" routerLink="/admin/profile">
                 Profile
                 <span class="badge">New</span>
               </a>
@@ -66,7 +66,9 @@
 
     <!-- Main  -->
     <main class="container m-auto px-1">
-      <div class="card bg-base-100 shadow-xl card-bordered">
+      <div
+        class="card bg-base-100 shadow-xl card-bordered print:-mt-5 print:shadow-none print:border-none print:p-0"
+      >
         <div class="card-body">
           <router-outlet />
         </div>
@@ -99,6 +101,12 @@
       </div>
       <!-- Sidebar content here -->
       <ul>
+        <li>
+          <a routerLinkActive="active" routerLink="/admin/dashboard"
+            >Dashboard</a
+          >
+        </li>
+
         <li>
           <details>
             <summary class="mb-2">Inventario</summary>

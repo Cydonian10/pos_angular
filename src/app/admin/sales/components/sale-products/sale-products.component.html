@@ -1,38 +1,37 @@
-<div class="card bg-base-200 w-full">
-  <div class="card-body leading-3">
-    <div class="flex items-center justify-between">
+<div class="card bg-base-300 p-3 w-full">
+  <div class="leading-3">
+    <div class="flex flex-col justify-between">
       <!-- contenido -->
-      <div class="flex flex-col gap-1">
-        <span class="font-bold tracking-wide">{{
-          product().name | uppercase
-        }}</span>
-        <span class="text-sm leading-3">
-          Stock: {{ product().stock }} {{ product().unitMeasurement }}(s)
-        </span>
+      <span class="font-bold">{{ product().name | uppercase }}</span>
+      <span class="text-sm">
+        Stock: {{ product().stock }} {{ product().unitMeasurement }}(s)
+      </span>
+      <div class="flex items-start justify-between">
         <span class="text-sm">
           {{
             product().salePrice | currency: "S/ " : "symbol-narrow" : "1.2-2"
           }}
           x {{ product().unitMeasurement }}
         </span>
-      </div>
-      <!-- Cantidad -->
-      <div class="join">
-        <input
-          [formControl]="quantity"
-          [ngClass]="{
-            'input-error': quantity.getError('required') && quantity.touched
-          }"
-          type="number"
-          class="input-sm input input-bordered join-item input-secondary w-20"
-          placeholder="Cantidad Ejemplo 12.5"
-        />
-        <button
-          (click)="handleAddPostItem()"
-          class="btn btn-sm btn-secondary join-item"
-        >
-          +
-        </button>
+
+        <!-- Cantidad -->
+        <form class="join">
+          <input
+            [formControl]="quantity"
+            [ngClass]="{
+              'input-error': quantity.getError('required') && quantity.touched
+            }"
+            type="number"
+            class="input-sm input input-bordered join-item input-secondary w-20"
+            placeholder="Cantidad Ejemplo 12.5"
+          />
+          <button
+            (click)="handleAddPostItem($event)"
+            class="btn btn-sm btn-secondary join-item"
+          >
+            +
+          </button>
+        </form>
       </div>
     </div>
   </div>

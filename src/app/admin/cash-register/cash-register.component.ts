@@ -1,6 +1,5 @@
 import { CashRegister } from '@/api/interfaces/cash-register.interface';
 import { AdminTitleComponent } from '@/components/admin-title/admin-title.component';
-import { CashRegisterStore } from '@/core/store/cash-register.store';
 import { Dialog } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
 import {
@@ -13,6 +12,7 @@ import { FormUpdateCashComponent } from './components/form-update-cash/form-upda
 import { UpdateCustomerDto } from '@/api/interfaces/customer.interface';
 import { FormOpenCashComponent } from './components/form-open-cash/form-open-cash.component';
 import { RouterLink } from '@angular/router';
+import { CashRegistersStore } from '@/store/cash-registers.store';
 
 @Component({
   selector: 'app-cash-register',
@@ -23,13 +23,11 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CashRegisterComponent implements OnInit {
-  #storeCashRegister = inject(CashRegisterStore);
+  readonly cashRegisterStore = inject(CashRegistersStore);
   #dialog = inject(Dialog);
 
-  cashRegisterState = this.#storeCashRegister.state;
-
   ngOnInit(): void {
-    this.#storeCashRegister.getAll();
+    this.cashRegisterStore.getAll();
   }
 
   openUpdate(cashRegister?: CashRegister) {
@@ -48,8 +46,6 @@ export default class CashRegisterComponent implements OnInit {
       });
   }
 
-  remove(cashRegister: CashRegister) {}
-
   openCashRegister(cashRegister: CashRegister) {
     this.#dialog
       .open(FormOpenCashComponent, {
@@ -61,18 +57,18 @@ export default class CashRegisterComponent implements OnInit {
 
         if (resp.id) {
           const { id, ...rest } = resp;
-          this.#storeCashRegister.openCash(rest, id);
+          this.cashRegisterStore.openCash(rest, id);
         }
       });
   }
 
-  deleteUserCashRegiser(cashRegister: CashRegister) {
+  removeUserCashRegiser(cashRegister: CashRegister) {
     const confirm = window.confirm(
-      `Desea eliminar el usuario  con id:  ${cashRegister.userId.toUpperCase()}`,
+      `Desea remover el usuario  con id:  ${cashRegister.userId.toUpperCase()}`,
     );
   }
 
   updateCashRegister(dto: UpdateCustomerDto, id: number) {
-    this.#storeCashRegister.update(dto, id);
+    this.cashRegisterStore.update(dto, id);
   }
 }
