@@ -143,7 +143,6 @@ export class UserStore {
 
   profile() {
     const token = this.#tokenSrv.getToken();
-
     if (token) {
       this.#userSrv.profile().subscribe({
         next: (userAuth: UserAuth) => {

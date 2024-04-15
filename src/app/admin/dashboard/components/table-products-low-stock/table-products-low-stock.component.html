@@ -1,0 +1,38 @@
+<app-card-header title="Producto bajos en estock">
+  <!-- Tablas -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+  <div class="overflow-x-auto">
+    @if (productsLowStock().length !== 0) {
+      <table class="table text-sm">
+        <!-- head -->
+        <thead class="sticky top-0 bg-base-200">
+          <tr>
+            <th></th>
+            <th class="sticky left-0 bg-base-200">Nombre</th>
+            <th>Ventas</th>
+            <th>Unidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          @for (product of productsLowStock(); track $index) {
+            <tr>
+              <th>{{ $index + 1 }}</th>
+              <td class="sticky left-0">
+                {{ product.name }}
+              </td>
+              <td>{{ product.quantitySale }}</td>
+              <td>{{ product.unitSymbol }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p>No hay productos con menos de 30 unidaes de stock</p>
+    }
+  </div>
+  <!-- *************************************** -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+</app-card-header>

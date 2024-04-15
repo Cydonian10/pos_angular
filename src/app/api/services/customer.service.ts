@@ -7,6 +7,7 @@ import {
   UpdateCustomerDto,
 } from '../interfaces/customer.interface';
 import { Pagination } from '../interfaces/pagination.interface';
+import { checkToken } from '@/core/interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -28,20 +29,27 @@ export class CustomerService {
     return this.#http.get<Customer[]>(`${this.#url}/customers`, {
       observe: 'response',
       params,
+      context: checkToken(),
     });
   }
 
   create(dto: CreateCustomerDto) {
-    return this.#http.post<Customer>(`${this.#url}/customers`, dto);
+    return this.#http.post<Customer>(`${this.#url}/customers`, dto, {
+      context: checkToken(),
+    });
   }
 
   getOne() {}
 
   update(dto: UpdateCustomerDto, id: number) {
-    return this.#http.put<Customer>(`${this.#url}/customers/${id}`, dto);
+    return this.#http.put<Customer>(`${this.#url}/customers/${id}`, dto, {
+      context: checkToken(),
+    });
   }
 
   remove(id: number) {
-    return this.#http.delete<void>(`${this.#url}/customers/${id}`);
+    return this.#http.delete<void>(`${this.#url}/customers/${id}`, {
+      context: checkToken(),
+    });
   }
 }

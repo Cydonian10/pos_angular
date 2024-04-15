@@ -83,7 +83,7 @@ export const CustomersStore = signalStore(
 
           const customer = await lastValueFrom(customerSrv.create(dto));
           patchState(store, (state) => ({
-            categories: [customer, ...state.customers],
+            customers: [customer, ...state.customers],
             totalRecords: state.totalRecords + 1,
             isLoading: false,
           }));

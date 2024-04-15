@@ -42,6 +42,8 @@ export default class CashRegisterComponent implements OnInit {
         if (resp.id) {
           const { id, ...rest } = resp;
           this.updateCashRegister(rest, id);
+        } else {
+          this.createCashRegister(resp);
         }
       });
   }
@@ -70,5 +72,13 @@ export default class CashRegisterComponent implements OnInit {
 
   updateCashRegister(dto: UpdateCustomerDto, id: number) {
     this.cashRegisterStore.update(dto, id);
+  }
+
+  createCashRegister(value: any) {
+    console.log(value.name);
+    this.cashRegisterStore.createCashRegister({
+      date: new Date(),
+      name: value.name,
+    });
   }
 }

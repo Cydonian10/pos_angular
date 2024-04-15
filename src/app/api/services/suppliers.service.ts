@@ -32,6 +32,7 @@ export class SupplierService {
   search(name: string) {
     return this.#http.get<Supplier[]>(
       `${this.#url}/suppliers/search?name=${name}`,
+      { context: checkToken() },
     );
   }
 }

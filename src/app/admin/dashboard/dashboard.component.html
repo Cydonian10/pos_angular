@@ -7,8 +7,9 @@
     </div>
 
     <div class="stat-title">Costo en ventas inventario</div>
-    <div class="stat-value">{{ stadistics().totalInventoryCost }}</div>
-    <div class="stat-desc">From January 1st to February 1st</div>
+    <div class="stat-value">
+      {{ stadistics().totalInventoryCost | currency: "S/" : "symbol-narrow" }}
+    </div>
   </div>
 
   <div class="stat place-items-center w-full md:w-3/12">
@@ -16,8 +17,9 @@
       <i class="bx bxs-purchase-tag-alt text-2xl"></i>
     </div>
     <div class="stat-title">Costo de Inventario</div>
-    <div class="stat-value">{{ stadistics().totalInventoryPrice }}</div>
-    <div class="stat-desc">↗︎ 40 (2%)</div>
+    <div class="stat-value">
+      {{ stadistics().totalInventoryPrice | currency: "S/" : "symbol-narrow" }}
+    </div>
   </div>
 
   <div class="stat place-items-center w-full md:w-3/12">
@@ -26,7 +28,6 @@
     </div>
     <div class="stat-title">Productos</div>
     <div class="stat-value">{{ stadistics().totalProducts }}</div>
-    <div class="stat-desc">↘︎ 90 (14%)</div>
   </div>
 
   <div class="stat place-items-center w-full md:w-3/12">
@@ -34,7 +35,33 @@
       <i class="bx bx-customize text-2xl" style="color: #ffffff"></i>
     </div>
     <div class="stat-title">Ventas</div>
-    <div class="stat-value">{{ stadistics().totalSalesPrice }}</div>
-    <div class="stat-desc">↘︎ 90 (14%)</div>
+    <div class="stat-value">
+      {{ stadistics().totalSalesPrice | currency: "S/" : "symbol-narrow" }}
+    </div>
   </div>
+</div>
+
+<!-- Graficos -->
+<div class="flex gap-3 items-start flex-wrap md:flex-nowrap">
+  <div class="w-full h-[500px] mt-5 card bg-base-300 p-10">
+    <canvas #selledByDayChart></canvas>
+  </div>
+  <div class="w-full md:w-[700px] h-[500px] mt-5 card bg-base-300 p-10">
+    <canvas #mostSelledChart></canvas>
+  </div>
+</div>
+
+<!-- Tablas -->
+<div class="flex flex-col md:flex-row gap-3 mt-5">
+  <app-table-least-sol-products
+    class="w-full"
+    [leastSoldProducts]="leastSoldProducts()"
+  />
+
+  <app-table-products-low-stock
+    class="w-full"
+    [productsLowStock]="productsLowStock()"
+  />
+
+  <app-table-top-sales class="w-full" [topSales]="topSales()" />
 </div>

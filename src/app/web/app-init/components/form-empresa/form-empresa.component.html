@@ -1,0 +1,67 @@
+<form [formGroup]="form" class="card-body" (ngSubmit)="submitForm()">
+  <h3 class="text-center font-bold text-xl">Registro de Empresa</h3>
+  <!-- Name -->
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text font-bold">Nombre</span>
+    </label>
+    <input
+      type="text"
+      placeholder="xxxx@hotmail.com"
+      class="input input-bordered input-primary"
+      required
+      formControlName="name"
+    />
+    @if (name.invalid && name.touched) {
+      @for (error of name.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </div>
+
+  <!-- Ruc -->
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text font-bold">RUC</span>
+    </label>
+    <input
+      type="text"
+      placeholder="tu password"
+      class="input input-bordered input-primary"
+      formControlName="ruc"
+    />
+    @if (ruc.invalid && ruc.touched) {
+      @for (error of ruc.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </div>
+
+  <!-- Adress -->
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text font-bold">Avenida</span>
+    </label>
+    <input
+      type="text"
+      placeholder="Av. Ricardo Palama"
+      class="input input-bordered input-primary"
+      formControlName="address"
+    />
+    @if (address.invalid && address.touched) {
+      @for (error of address.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </div>
+
+  <div class="form-control mt-6">
+    <button type="submit" class="btn btn-primary">Next</button>
+  </div>
+</form>

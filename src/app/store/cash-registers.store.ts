@@ -1,5 +1,6 @@
 import {
   CashRegister,
+  CreateCashRegisterDto,
   OpenCashRegisterDto,
   UpdateCashRegisterDto,
 } from '@/api/interfaces/cash-register.interface';
@@ -142,6 +143,28 @@ export const CashRegistersStore = signalStore(
               }
               return cashRe;
             }),
+          });
+
+          this.saveCurrentCashRegister(null);
+
+          alertSrv.showAlertSuccess(`La caja ${dto.name} fue cerrada`);
+        } catch (error) {
+          patchState(store, { isLoading: false });
+        }
+      },
+
+      //
+      async createCashRegister(dto: CreateCashRegisterDto): Promise<void> {
+        try {
+          patchState(store, { isLoading: true });
+          const cashRegisterDB = await lastValueFrom(
+            cashRegisterSrv.create(dto),
+          );
+
+          patchState(store, {
+            isLoading: false,
+            currentCashRegister: null,
+            cashRegisters: [...store.cashRegisters(), cashRegisterDB],
           });
 
           this.saveCurrentCashRegister(null);

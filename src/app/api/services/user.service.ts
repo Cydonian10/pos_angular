@@ -32,7 +32,9 @@ export class UserService {
   }
 
   registerUser(dto: CreateUserDto) {
-    return this.#http.post<UserToken>(`${this.#url}/auth/register`, dto);
+    return this.#http.post<UserToken>(`${this.#url}/auth/register`, dto, {
+      context: checkToken(),
+    });
   }
 
   login(dto: LoginUserDto) {

@@ -1,0 +1,145 @@
+<form [formGroup]="form" class="card-body" (ngSubmit)="submitForm()">
+  <!-- Input Nombre -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Nombre</span>
+    </div>
+    <input
+      formControlName="name"
+      type="text"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (name.invalid && name.touched) {
+      @for (error of name.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input Password -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Password</span>
+    </div>
+    <input
+      formControlName="password"
+      type="password"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (password.invalid && password.touched) {
+      @for (error of password.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input Email -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Email</span>
+    </div>
+    <input
+      formControlName="email"
+      type="email"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (email.invalid && email.touched) {
+      @for (error of email.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input Salrio -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Salario</span>
+    </div>
+    <input
+      formControlName="salary"
+      type="number"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (salary.invalid && salary.touched) {
+      @for (error of salary.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input Fecha Cumpleaños -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Fecha Cumpleaños </span>
+    </div>
+    <input
+      formControlName="dateBirthday"
+      type="date"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (dateBirthday.invalid && dateBirthday.touched) {
+      @for (error of dateBirthday.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input DNI -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">DNI</span>
+    </div>
+    <input
+      formControlName="dni"
+      type="text"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (dni.invalid && dni.touched) {
+      @for (error of dni.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <!-- Input Telefono -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Telefono</span>
+    </div>
+    <input
+      formControlName="phone"
+      type="text"
+      placeholder="Type here"
+      class="input input-bordered input-primary w-full"
+    />
+    @if (phone.invalid && phone.touched) {
+      @for (error of phone.errors | keyvalue; track $index) {
+        <span class="label-text text-error font-bold">{{
+          error | formerror: { minl: 3 }
+        }}</span>
+      }
+    }
+  </label>
+
+  <div class="form-control mt-6">
+    <button type="submit" class="btn btn-primary">Next</button>
+  </div>
+</form>

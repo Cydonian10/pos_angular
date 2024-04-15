@@ -1,0 +1,35 @@
+<div
+  class="container m-auto flex flex-col gap-4 md:flex-row items-start h-screen"
+>
+  <div class="self-center w-full md:w-1/2">
+    <div class="text-center mb-10">
+      <h1
+        class="bg-gradient-to-r from-success via-accent to-success bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl"
+      >
+        Inicio de la Applicacion
+      </h1>
+    </div>
+    <div class="flex items-start justify-center">
+      <ul class="steps steps-vertical">
+        <li class="step step-primary">Registro de datos de la empresa</li>
+        <li [ngClass]="{ 'step-primary': nextStep() }" class="step">
+          Registro datos del usuario
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Formularios -->
+  <div class="w-full md:w-1/2 self-center flex items-start justify-center">
+    <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      @if (!nextStep()) {
+        <app-form-empresa
+          [nextStep]="nextStep()"
+          (onChangeNextStep)="changeNextStep()"
+        />
+      } @else {
+        <app-form-user />
+      }
+    </div>
+  </div>
+</div>

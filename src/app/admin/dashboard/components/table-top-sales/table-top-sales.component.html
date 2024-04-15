@@ -1,0 +1,36 @@
+<app-card-header title="Top Ventas">
+  <!-- Tablas -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+  <div class="overflow-x-auto">
+    @if (topSales().length !== 0) {
+      <table class="table text-sm">
+        <!-- head -->
+        <thead class="sticky top-0 bg-base-200">
+          <tr>
+            <th></th>
+            <th class="sticky left-0 bg-base-200">Nombre</th>
+            <th>Ventas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          @for (customer of topSales(); track $index) {
+            <tr>
+              <th>{{ $index + 1 }}</th>
+              <td class="sticky left-0">
+                {{ customer.userName }}
+              </td>
+              <td>{{ customer.totalSales | currency: "s/" : "symbol" }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      NO hay Top Ventas
+    }
+  </div>
+  <!-- *************************************** -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+</app-card-header>

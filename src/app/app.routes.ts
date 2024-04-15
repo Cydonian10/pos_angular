@@ -4,7 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { redirectGuard } from './core/guards/redirect.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   {
     path: 'admin',
     component: AdminLayout,
@@ -114,6 +114,10 @@ export const routes: Routes = [
         loadComponent: () => import('@/auth/login/login.component'),
       },
     ],
+  },
+  {
+    path: 'web/init',
+    loadComponent: () => import('@/web/app-init/app-init.component'),
   },
   {
     path: '**',

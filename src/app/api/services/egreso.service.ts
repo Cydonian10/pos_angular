@@ -20,6 +20,8 @@ export class EgresoService {
   }
 
   create(dtoCreate: CreateEgresoDto) {
-    return this.#http.post<Egreso>(`${this.#url}/egresos`, dtoCreate);
+    return this.#http.post<Egreso>(`${this.#url}/egresos`, dtoCreate, {
+      context: checkToken(),
+    });
   }
 }

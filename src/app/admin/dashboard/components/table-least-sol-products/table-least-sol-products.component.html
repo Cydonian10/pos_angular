@@ -1,0 +1,36 @@
+<app-card-header title="Productos menos vendidos">
+  <!-- Tablas -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+  <div class="overflow-x-auto">
+    <table class="table text-sm">
+      <!-- head -->
+      <thead class="sticky top-0 bg-base-200">
+        <tr>
+          <th></th>
+          <th class="sticky left-0 bg-base-200">Nombre</th>
+          <th>Ventas</th>
+          <th>Unidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        @for (product of leastSoldProducts(); track $index) {
+          <tr>
+            <th>{{ $index + 1 }}</th>
+            <td class="sticky left-0">
+              {{ product.name }}
+            </td>
+            <td>{{ product.quantitySale }}</td>
+            <td>{{ product.unitSymbol }}</td>
+          </tr>
+        } @empty {
+          <p>No hay categorias...</p>
+        }
+      </tbody>
+    </table>
+  </div>
+  <!-- *************************************** -->
+  <!-- ******** Table *********************** -->
+  <!-- *************************************** -->
+</app-card-header>

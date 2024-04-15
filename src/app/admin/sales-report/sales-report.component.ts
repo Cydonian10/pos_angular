@@ -30,7 +30,7 @@ registerLocaleData(localeEs);
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: LOCALE_ID, useValue: 'es' }, // Establece el idioma en español
+    { provide: LOCALE_ID, useValue: 'es-PE' }, // Establece el idioma en español
   ],
 })
 export default class SalesReportComponent implements OnInit {

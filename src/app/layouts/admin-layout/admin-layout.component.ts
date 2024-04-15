@@ -1,5 +1,6 @@
 import { AlertComponent } from '@/components/alert/alert.component';
 import { AlertService } from '@/core/services/alert.service';
+import { UserStore } from '@/core/store/user.store';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'admin-layout',
@@ -20,6 +21,10 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class AdminLayout {
   public config = inject(AlertService).config;
+  private userStore = inject(UserStore);
+  private router = inject(Router);
+
+  public userAuthRoles = this.userStore.state().currentUser?.roles;
 
   isDark = new FormControl(false, {
     nonNullable: true,
@@ -76,5 +81,12 @@ export class AdminLayout {
         document.documentElement.setAttribute('data-theme', this.theme());
       }
     });
+
+    console.log();
+  }
+
+  logout() {
+    window.localStorage.removeItem('token-auth');
+    this.router.navigateByUrl('/auth/login');
   }
 }

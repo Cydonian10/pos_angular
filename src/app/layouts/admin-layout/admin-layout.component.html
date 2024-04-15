@@ -7,7 +7,7 @@
   <div class="drawer-content">
     <!-- Page content here -->
     <!-- NavBarComponent -->
-    <div class="navbar bg-primary print:hidden mb-4">
+    <div class="navbar bg-primary print:hidden mb-4 px-5">
       <div class="flex-1 space-x-4">
         <label class="flex items-center cursor-pointer gap-2 my-3">
           <i class="bx bx-brightness text-xl text-amber-500"></i>
@@ -18,6 +18,12 @@
             class="toggle theme-controller"
           />
           <i class="bx bxs-moon text-xl"></i>
+        </label>
+        <label
+          for="my-drawer"
+          class="btn btn-ghost drawer-button text-primary text-xl 2xl:hidden rounded-full"
+        >
+          <i class="bx bx-menu-alt-left text-secondary"></i>
         </label>
       </div>
       <div class="flex-none gap-2">
@@ -51,15 +57,9 @@
               </a>
             </li>
             <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
+            <li><a (click)="logout()">Logout</a></li>
           </ul>
         </div>
-        <label
-          for="my-drawer"
-          class="btn btn-ghost drawer-button text-primary text-xl 2xl:hidden rounded-full"
-        >
-          <i class="bx bx-menu-alt-left"></i>
-        </label>
       </div>
     </div>
     <!-- NavBarComponent -->
@@ -101,43 +101,69 @@
       </div>
       <!-- Sidebar content here -->
       <ul>
-        <li>
-          <a routerLinkActive="active" routerLink="/admin/dashboard"
-            >Dashboard</a
-          >
-        </li>
+        @if (userAuthRoles?.includes("admin")) {
+          <li>
+            <a
+              for="my-drawer"
+              routerLinkActive="active"
+              routerLink="/admin/dashboard"
+              >Dashboard</a
+            >
+          </li>
+        }
 
-        <li>
-          <details>
-            <summary class="mb-2">Inventario</summary>
-            <!-- LInks uno -->
-            <ul class="space-y-1">
-              @for (item of links; track $index) {
-                <li>
-                  <a routerLinkActive="active" [routerLink]="item.path">{{
-                    item.name
-                  }}</a>
-                </li>
-              }
-            </ul>
-          </details>
-        </li>
+        @if (userAuthRoles?.includes("admin")) {
+          <li>
+            <details>
+              <summary class="mb-2">Inventario</summary>
+              <!-- LInks uno -->
+              <ul class="space-y-1">
+                @for (item of links; track $index) {
+                  <li>
+                    <a routerLinkActive="active" [routerLink]="item.path">{{
+                      item.name
+                    }}</a>
+                  </li>
+                }
+              </ul>
+            </details>
+          </li>
 
-        <li>
-          <details>
-            <summary class="mb-2">Usuarios</summary>
-            <!-- LInks dos -->
-            <ul class="space-y-1">
-              @for (item of linkUsers; track $index) {
-                <li>
-                  <a routerLinkActive="active" [routerLink]="item.path">{{
-                    item.name
-                  }}</a>
-                </li>
-              }
-            </ul>
-          </details>
-        </li>
+          <li>
+            <details>
+              <summary class="mb-2">Usuarios</summary>
+              <!-- LInks dos -->
+              <ul class="space-y-1">
+                @for (item of linkUsers; track $index) {
+                  <li>
+                    <a routerLinkActive="active" [routerLink]="item.path">{{
+                      item.name
+                    }}</a>
+                  </li>
+                }
+              </ul>
+            </details>
+          </li>
+
+          <li>
+            <details>
+              <summary class="mb-2">Proveedors</summary>
+              <!-- LInks dos -->
+              <ul class="space-y-1">
+                @for (link of proveedors; track $index) {
+                  <li>
+                    <a
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                      [routerLink]="link.path"
+                      >{{ link.name }}</a
+                    >
+                  </li>
+                }
+              </ul>
+            </details>
+          </li>
+        }
 
         <li>
           <details>
@@ -151,25 +177,6 @@
                     [routerLinkActiveOptions]="{ exact: true }"
                     [routerLink]="item.path"
                     >{{ item.name }}</a
-                  >
-                </li>
-              }
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary class="mb-2">Proveedors</summary>
-            <!-- LInks dos -->
-            <ul class="space-y-1">
-              @for (link of proveedors; track $index) {
-                <li>
-                  <a
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    [routerLink]="link.path"
-                    >{{ link.name }}</a
                   >
                 </li>
               }
