@@ -21,4 +21,10 @@ export class EmpresaService {
   create(form: FormData) {
     return this.#http.post<Empresa>(`${this.#url}/empresa`, form);
   }
+
+  update(form: FormData) {
+    return this.#http.put<Empresa>(`${this.#url}/empresa/${1}`, form, {
+      context: checkToken(),
+    });
+  }
 }

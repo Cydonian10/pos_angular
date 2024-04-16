@@ -2,7 +2,7 @@
   (click)="isOpen = !isOpen"
   type="button"
   cdkOverlayOrigin
-  class="btn-sm md:btn-md btn btn-outline btn-primary px-10 md:px-10"
+  class="btn-sm btn btn-outline btn-primary px-10 md:px-10"
   #trigger="cdkOverlayOrigin"
 >
   {{ isOpen ? "Cerrar Filtro" : "Abrir Filtro" }}
@@ -19,7 +19,7 @@
     <form [formGroup]="form">
       <select
         formControlName="rol"
-        class="select select-sm select-bordered w-full max-w-xs select-primary"
+        class="select select-bordered w-full select-primary select-sm"
       >
         <option disabled selected>Selecione un rol</option>
         @for (rol of roles(); track $index) {

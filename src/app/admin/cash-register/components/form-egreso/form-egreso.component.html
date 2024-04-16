@@ -12,25 +12,11 @@
   <!-- Formulario -->
   <div class="p-5 h-[calc(100vh_-_156px)] bg-base-100">
     <form [formGroup]="form" class="space-y-1">
-      <!-- Input Nombre -->
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Dinero Inicial</span>
+      <div class="flex justify-end">
+        <div class="bg-base-200 rounded-md py-2 w-[130px] text-center">
+          <span class="font-bold">{{ fechaActual | date: "dd-MMM-yyyy" }}</span>
         </div>
-        <input
-          formControlName="createDate"
-          type="date"
-          placeholder="Type here"
-          class="input input-bordered w-full input-primary"
-        />
-        @if (createDate.invalid && createDate.touched) {
-          @for (error of createDate.errors | keyvalue; track $index) {
-            <span class="label-text text-error font-bold">{{
-              error | formerror: { minl: 3 }
-            }}</span>
-          }
-        }
-      </label>
+      </div>
 
       <!-- Input Name -->
       <label class="form-control w-full">

@@ -4,7 +4,6 @@ import { authGuard } from './core/guards/auth.guard';
 import { redirectGuard } from './core/guards/redirect.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   {
     path: 'admin',
     component: AdminLayout,
@@ -13,6 +12,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('@/admin/dashboard/dashboard.component'),
+      },
+      {
+        path: 'empresa',
+        loadComponent: () => import('@/admin/empresa/empresa.component'),
       },
       {
         path: 'profile',
@@ -102,6 +105,7 @@ export const routes: Routes = [
           },
         ],
       },
+      { path: '**', redirectTo: ' dashboard' },
     ],
   },
 

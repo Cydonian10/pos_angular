@@ -1,0 +1,75 @@
+<admin-title title="Datos de la empresa" [showButton]="false" />
+
+<app-card-header title="Empresa">
+  <div class="flex flex-col md:flex-row gap-4 items-start">
+    <form [formGroup]="form" class="w-full md:w-5/12">
+      <!-- Nombre -->
+
+      <label class="form-control w-full">
+        <div (dblclick)="toggleInput(name)" class="label">
+          <span class="label-text font-bold">Nombre</span>
+        </div>
+        <input
+          type="text"
+          placeholder="Type here"
+          formControlName="name"
+          class="input input-bordered w-full disabled:cursor-pointer disabled:font-bold"
+        />
+      </label>
+
+      <!-- RUC -->
+
+      <label class="form-control w-full">
+        <div (dblclick)="toggleInput(ruc)" class="label">
+          <span class="label-text font-bold">RUC</span>
+        </div>
+        <input
+          type="text"
+          placeholder="Type here"
+          formControlName="ruc"
+          class="input input-bordered w-full disabled:cursor-pointer disabled:font-bold"
+        />
+      </label>
+
+      <!-- Direccion -->
+      <label class="form-control w-full">
+        <div (dblclick)="toggleInput(address)" class="label">
+          <span class="label-text font-bold">Dirección</span>
+        </div>
+        <input
+          type="text"
+          placeholder="Type here"
+          formControlName="address"
+          class="input input-bordered w-full disabled:cursor-pointer disabled:font-bold"
+        />
+      </label>
+
+      <!-- Subir Imagenes -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text font-bold">Imagen</span>
+        </div>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="file-input file-input-bordered file-input-accent w-full"
+        />
+      </label>
+
+      <button class="btn btn-primary mt-3" (click)="submitForm()">
+        Guardar Cambios
+      </button>
+    </form>
+    <div class="w-full md:w-7/12 flex items-center justify-center">
+      @if (imageUrl()) {
+        <div class="avatar">
+          <div class="w-80 rounded">
+            <img [src]="imageUrl()" alt="no hay imagen" />
+          </div>
+        </div>
+      } @else {
+        <p class="text-error font-bold">No hay imagen</p>
+      }
+    </div>
+  </div>
+</app-card-header>

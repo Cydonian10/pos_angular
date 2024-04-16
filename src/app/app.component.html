@@ -1,1 +1,5 @@
+@if (alertConfig().show) {
+  <app-alert [message]="alertConfig().message" [alert]="alertConfig().type" />
+}
+
 <router-outlet />

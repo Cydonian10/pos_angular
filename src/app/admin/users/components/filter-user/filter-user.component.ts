@@ -26,7 +26,7 @@ export class FilterUserComponent {
   onDeleteFilter = output<void>();
 
   form = this.#fb.group({
-    rol: new FormControl(''),
+    rol: new FormControl('admin'),
   });
 
   handleDeleteFilter() {

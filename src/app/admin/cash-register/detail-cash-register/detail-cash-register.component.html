@@ -18,10 +18,9 @@
       <tr>
         <th></th>
         <th class="sticky left-0 bg-base-100">Nombre</th>
-        <th>Dinero Incial</th>
-        <th>Dinero Actual</th>
-        <th>Abierto</th>
-        <th>UserId</th>
+        <th>Fecha</th>
+        <th>Dinero</th>
+        <th>Egreso</th>
       </tr>
     </thead>
     <tbody>
@@ -29,20 +28,14 @@
       @for (egreso of egresos(); track $index) {
         <tr>
           <th>{{ $index + 1 }}</th>
-          <td
-            [ngClass]="{
-              'bg-base-100': $index % 2 == 0,
-              'bg-base-200': $index % 2 == 1
-            }"
-            class="sticky left-0"
-          >
+          <td class="sticky left-0">
             {{ egreso.name }}
           </td>
           <td>
-            <span>{{ egreso.createDate }}</span>
+            <span>{{ egreso.createDate | date: "dd MMMM yyyy" }}</span>
           </td>
           <td>
-            {{ egreso.monto }}
+            {{ egreso.monto | currency: "Symbol" : "s/ " }}
           </td>
           <td>
             <span

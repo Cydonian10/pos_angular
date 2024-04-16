@@ -1,11 +1,10 @@
-import { ErrorMessageComponent } from '@/components/error-message/error-message.component';
-import { Dialog } from '@angular/cdk/dialog';
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { EMPTY, catchError, finalize } from 'rxjs';
+import { EMPTY, catchError } from 'rxjs';
+import { AlertService } from '../services/alert.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const dialog = inject(Dialog);
+  const alert = inject(AlertService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -14,13 +13,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.error.msg) {
         errorMessage = `Error code: ${error.status} Error: ${error.error.msg}`;
       } else {
-        errorMessage = `Error code: ${error.status} , message: ${JSON.stringify(error.error.title)}`;
+        errorMessage = `Error al iniciar`;
       }
 
-      dialog.open(ErrorMessageComponent, {
-        data: errorMessage,
-        disableClose: true,
-      });
+      console.log(error);
+
+      alert.showAlertError(errorMessage);
 
       return EMPTY;
     }),

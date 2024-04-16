@@ -1,14 +1,14 @@
 import { Egreso } from '@/api/interfaces/egreso.interface';
 import { FormErrorPipe } from '@/core/pipes/form-error.pipe';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { KeyValuePipe } from '@angular/common';
+import { DatePipe, KeyValuePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form-egreso',
   standalone: true,
-  imports: [ReactiveFormsModule, FormErrorPipe, KeyValuePipe],
+  imports: [ReactiveFormsModule, FormErrorPipe, KeyValuePipe, DatePipe],
   templateUrl: './form-egreso.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +19,7 @@ export class FormEgresoComponent {
     public dialogRef: DialogRef<any>,
     @Inject(DIALOG_DATA) public data?: number,
   ) {}
-
+  fechaActual = new Date();
   form = this.fb.group({
     createDate: new FormControl(
       { value: '', disabled: true },
@@ -63,7 +63,7 @@ export class FormEgresoComponent {
 
   ngOnInit() {
     const fechaActual = new Date(); // Obtener la fecha actual
-    const fechaLocal = fechaActual.toLocaleDateString();
+    const fechaLocal = fechaActual.toUTCString();
     this.createDate.setValue(fechaLocal);
     this.cashRegisterId.setValue(this.data!);
   }

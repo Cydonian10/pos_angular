@@ -3,11 +3,13 @@ import { Router, RouterOutlet } from '@angular/router';
 import { UserStore } from './core/store/user.store';
 import { CashRegistersStore } from './store/cash-registers.store';
 import { AppInitService } from './api/services/appinit.service';
+import { AlertService } from './core/services/alert.service';
+import { AlertComponent } from './components/alert/alert.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, AlertComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -16,6 +18,7 @@ export class AppComponent {
   readonly cashRegisterStore = inject(CashRegistersStore);
   readonly appInitSrv = inject(AppInitService);
   readonly router = inject(Router);
+  readonly alertConfig = inject(AlertService).config;
 
   constructor() {
     const theme = localStorage.getItem('theme');

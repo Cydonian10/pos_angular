@@ -20,7 +20,6 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminLayout {
-  public config = inject(AlertService).config;
   private userStore = inject(UserStore);
   private router = inject(Router);
 
@@ -86,7 +85,11 @@ export class AdminLayout {
   }
 
   logout() {
-    window.localStorage.removeItem('token-auth');
-    this.router.navigateByUrl('/auth/login');
+    let confirm = window.confirm('Estar Seguro de Salir de la Aplicación ?');
+
+    if (confirm) {
+      window.localStorage.removeItem('token-auth');
+      this.router.navigateByUrl('/auth/login');
+    }
   }
 }

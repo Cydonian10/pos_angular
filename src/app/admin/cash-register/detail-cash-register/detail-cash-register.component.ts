@@ -3,7 +3,7 @@ import { Egreso } from '@/api/interfaces/egreso.interface';
 import { CashRegisterService } from '@/api/services/cash-register.service';
 import { EgresoService } from '@/api/services/egreso.service';
 import { Dialog } from '@angular/cdk/dialog';
-import { Location, NgClass } from '@angular/common';
+import { CurrencyPipe, DatePipe, Location, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -19,7 +19,7 @@ import { FormEgresoComponent } from '../components/form-egreso/form-egreso.compo
 @Component({
   selector: 'app-detail-cash-register',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, CurrencyPipe, DatePipe],
   templateUrl: './detail-cash-register.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
