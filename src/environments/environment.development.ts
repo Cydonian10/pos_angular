@@ -1,3 +1,3 @@
 export const environment = {
-  urlapi: 'https://localhost:7200/api',
+  urlapi: 'https://puntoventa20240415155144.azurewebsites.net/api',
 };
